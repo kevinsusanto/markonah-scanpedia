@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screen Capture | Mobile</title>
+</head>
+<body>
+    <div>
+        <button id="captureButton">Capture Screenshot</button>
+        <canvas id="screenshotCanvas" style="display: none;"></canvas>
+        <img id="screenshotImage" src="" alt="Screenshot" style="display: none;">
+        <button id="saveButton" style="display: none;">Save to Gallery</button>
+    </div>
+
+    <script>
+        const captureButton = document.getElementById('captureButton');
+        const screenshotCanvas = document.getElementById('screenshotCanvas');
+        const screenshotImage = document.getElementById('screenshotImage');
+        const saveButton = document.getElementById('saveButton'); // Add this button to your HTML
+
+        captureButton.addEventListener('click', () => {
+        const pageWidth = window.innerWidth;
+        const pageHeight = window.innerHeight;
+
+        screenshotCanvas.width = pageWidth;
+        screenshotCanvas.height = pageHeight;
+        const context = screenshotCanvas.getContext('2d');
+
+        // Create an Image object to hold the screenshot
+        const screenshotImageObj = new Image();
+
+        screenshotImageObj.onload = function () {
+            // Draw the screenshotImageObj onto the canvas
+            context.drawImage(screenshotImageObj, 0, 0, pageWidth, pageHeight);
+
+            // Display the canvas and "Save to Gallery" button
+            screenshotImage.style.display = 'none'; // Hide the image element
+            screenshotCanvas.style.display = 'block';
+            saveButton.style.display = 'block';
+        };
+
+        // Set the source of the Image object to the current page
+        screenshotImageObj.src = 'data:image/svg+xml,' + encodeURIComponent(new XMLSerializer().serializeToString(document));
+        });
+
+        saveButton.addEventListener('click', () => {
+        // Convert the canvas content to a Blob
+        screenshotCanvas.toBlob((blob) => {
+            // Create a new file name with a timestamp
+            const fileName = `screenshot_${Date.now()}.png`;
+
+            // Create a temporary <a> element to trigger the download
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = fileName;
+            a.style.display = 'none';
+
+            // Trigger a click event on the <a> element to start the download
+            document.body.appendChild(a);
+            a.click();
+
+            // Clean up by removing the <a> element and revoking the Blob URL
+            document.body.removeChild(a);
+            URL.revokeObjectURL(a.href);
+        }, 'image/png');
+        });
+
+
+
+    </script>
+</body>
+</html>

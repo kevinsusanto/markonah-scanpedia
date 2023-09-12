@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../cimb-ar-trivia"
+		},
+		{
+			"path": "../teknik-industri-petra"
+		},
+		{
+			"path": "../ar-new-proposal"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "markonah"
+	}
+}

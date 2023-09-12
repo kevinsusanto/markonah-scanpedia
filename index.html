@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markonah | Scanpedia</title>
+    <link rel="stylesheet" href="style.css?ver=3">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.0/dist/mindar-image-aframe.prod.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div id="app" class="app">
+        <!-- Audio Source Asset -->
+        <audio id="audio-hi" src="Asset/audio/mp3/Female Saying Hi 2.mp3"></audio>
+        <audio id="audio-no" src="Asset/audio/mp3/Female Saying No 4.mp3"></audio>
+        <audio id="audio-yes" src="Asset/audio/mp3/Female Voice Yes 1.mp3"></audio>
+        
+        <!-- Intro Page -->
+        <div class="intro-page" id="intro-page" v-show="intropage">
+            <div class="markonah-logo">
+                <img src="Asset/intro/markonah_logo_goodres.png" alt="" width="265px">
+            </div>
+            <div class="scanpedia-logo">
+                <img src="Asset/intro/scanpedia_logo_goodres.png" alt="" width="244px">
+            </div>
+            <div class="intro-text">
+                <p>Rasakan pengalaman seru bersama <span>AR Markonah</span> dan dapatkan <span> bonusnya!</span></p>
+            </div>
+            <button class="try-now-btn" @click="tryNowClick()">Play Now</button>
+        </div>
+
+        <!-- Registration Page -->
+        <div class="registration-page" id="registration-page" v-show="registpage">
+            <div class="registration-form">
+                <div class="form">
+                    <form v-on:submit.prevent="submitSignUp">
+                        <label for="regist-phone">Phone</label>
+                        <input v-model="userphonenumber" type="tel" id="regist-phone" name="regist-phone" placeholder="Example : 0853xxxxxxxx" required><br>
+                        <label for="first-name">First Name</label>
+                        <input v-model="userfirstname" type="text" id="first-name" name="first-name" placeholder="Example : Lionel" required><br>
+                        <label for="last-name">Last Name</label>
+                        <input v-model="userlastname" type="text" id="last-name" name="last-name" placeholder="Example : Messi" required>
+                        <button type="submit" class="sign-up-btn">Sign Up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- AR Introduction  -->
+        <div class="ar-intro-page" id="ar-intro-page" v-show="arintropage">
+            <img class="ar-bubble" src="Asset/arintro/bubble-indo-goodres.png" alt="" width="280px">
+            <button class="rear-camera-btn" @click="activateRearCameraClick()">Activate Rear Camera</button>
+            <img class="marko3" src="Asset/arintro/marko3-goodres.png" alt="Marko 3" width="170px">
+        </div>
+
+        <!-- AR Experience -->
+        <div class="ar-experience" id="ar-experience" v-show="arexperience">
+            <div class="ar-guidance" v-show="!targetfound && !markoclickme">
+                <p>Point your camera to</p>
+                <p>Markonah AR Marker</p>
+                <img src="Asset/gif/besar.gif" alt="marko GIF" width="104px">
+            </div>
+            <div id="guide" v-show="!targetfound">
+                <div class="hole"></div>
+                <div>
+                    <img src="Asset/arexperience/scanner-border-goodres.png" class="scanner-border">
+                </div>
+            </div>
+            <div class="ar-overlay" v-show="!targetfound">
+                <div class="overlay"></div>
+            </div>
+
+            <!-- After target has been found -->
+            <div class="ar-start-quiz" v-show="arstartquiz" @click="clickMeStartTheQuiz()">
+                <!-- <img class="marko3" src="Asset/arintro/marko3-goodres.png" alt="Marko 3" width="170px"> -->
+                <img class="marko3-clickme" alt="" src="Asset/arexperience/click-me-indo-goodres.png" width="287px">
+            </div>
+
+            <!-- Quiz Time !!! -->
+            <div class="quiz-container" v-show="markoclickme" >
+                <div class="question-number">{{ currentQuestion + 1 }} of {{questions.length == undefined ? 0 : questions.length}}</div>
+                <div class="question">{{ question == undefined ? "0" : question }}</div>
+                <img src="Asset/quiz/Ellipse 23.png" alt="">
+                <div class="btn-grid">
+                  <!-- <a class="box box1">Semarang</a>
+                  <a class="box box1">Solo</a>
+                  <a class="box box1">Salatiga</a>
+                  <a class="box box1">Surabaya</a> -->
+                  <a class="box box1" v-for="(answer, i) in answers" :key="answer.option_key" @click="checkAnswer(answer)" :class="answerClass(answer)">{{ answer.option }}</a>
+                </div>
+                <h1 :class="{benardialog: iscorrect, salahdialog: !iscorrect}" v-show="isanswered">{{ correctorincorrect }}</h1>
+                <button @click="nextQuestion()" :class="{questionnext: isanswered, questionnextdisabled: !isanswered}">Next</button>
+
+            </div>
+
+
+            <!-- Score -->
+            <div class="quiz-score" v-show="markoclickme">
+                <img src="Asset/quiz/bi_coin-goodres.png" alt="" width="24px">
+                <p>{{ totalcoins }}</p>
+            </div>
+
+
+            <!-- AR TIME !!! -->
+            <a-scene mindar-image="filterMinCF:0.0001; filterBeta: 0.001; imageTargetSrc: image/targets4.mind; autoStart: false; uiScanning: #guide"
+            color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
+            device-orientation-permission-ui="enabled: false" loading-screen="dotsColor: red; backgroundColor: black">
+
+            <!-- Video ASSETS -->
+            <a-assets>
+                <video id="marko-idle-video"
+                crossorigin="anonymous"
+                autoplay="false"
+                loop="true"
+                style="display: none;" 
+                playsinline>
+                    <source id="marko-idle-webm" src="Asset/webm/MARKONAH720x720-webm/Idle(720x720).webm">
+                    <source id="marko-idle-mov" src="Asset/mov/Idle(720x720).mov">
+
+                </video>
+                
+                <video id="marko-right-video"
+                crossorigin="anonymous"
+                autoplay="false"
+                loop="true"
+                style="display: none;" 
+                playsinline>
+                    <source id="marko-right-webm" src="Asset/webm/MARKONAH720x720-webm/Right(720x720).webm">
+                    <source id="marko-right-mov" src="Asset/mov/Right(720x720).mov">
+                </video>
+
+                <video id="marko-wrong-video"
+                crossorigin="anonymous"
+                autoplay="false"
+                loop="true"
+                style="display: none;" 
+                playsinline>
+                    <source id="marko-wrong-webm" src="Asset/webm/MARKONAH720x720-webm/Wrong(720x720).webm">
+                    <source id="marko-wrong-mov" src="Asset/mov/Wrong(720x720).mov">
+                </video>
+
+            </a-assets>
+            
+
+
+            <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+            <a-entity id="target-markonah" mindar-image-target="targetIndex: 0">
+                <a-video id="marko-idle" src="#marko-idle-video" width="1.8" height="1.8" loop="true" autoplay="true" position="0 0.4 0" visible="false"></a-video>
+                <a-video id="marko-right" src="#marko-right-video" width="1.8" height="1.8" loop="true" autoplay="true" position="0 0.7 0" visible="false"></a-video>
+                <a-video id="marko-wrong" src="#marko-wrong-video" width="1.8" height="1.8" loop="true" autoplay="true" position="0 0.7 0" visible="false"></a-video>
+            </a-entity>
+
+            </a-scene>
+        </div>
+
+        <!-- Result Page BERHASIL -->
+        <div class="result-page" id="result-page" v-show="resultpagesuccess">
+            <img class="confeti" src="Asset/gif/confeti.gif" alt="">
+            <div class="markonah-logo">
+                <img src="Asset/intro/markonah_logo_goodres.png" alt="" width="265px">
+            </div>
+
+            <div class="quiz-congratulations">
+                <p>Selamat Mbakyu telah menyelesaikan tantangan!</p>
+                <h5>Your Score</h5>
+                <div class="result-score">
+                    <img src="Asset/quiz/bi_coin-goodres.png" alt="" width="24px">
+                    <div class="score">{{ totalcoins }}</div>
+                </div>
+            </div>
+
+            <div class="claim-rewards">
+                <div class="claim-rewards-message">Klik untuk mendapatkan kupon yang dapat ditukar di setiap outlet Markonah. "CAPTURE" kupon untuk bukti penukaran.</div>
+                <img class="marko3" src="Asset/arintro/marko3-goodres.png" alt="Marko 3" width="200px">
+            </div>
+
+            <button class="claim-rewards-btn" @click="claimRewardsClick()">Claim Reward</button>
+
+            <!-- Star Rating -->
+            <div class="result-rating" v-show="resultpagesuccess && !closeresultrating">
+                <a href="#" class="close-btn" @click="closeRatingButtonClick()"><img src="Asset/result/close-button.png" alt="Close Button" width="24px"></a>
+                <!-- <div class="result-rating-message">How would you rate your experience with our company?</div> -->
+                <div class="result-rating-message">Bagaimana pengalaman Mbakyu bermain bersama Markonah?</div>
+                <div class="stars">
+                    <!-- <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i> -->
+                    <i v-for="(star,index) in stars" :key="index" 
+                    @click="rate(index+1)"
+                    :class="{active: index < selectedRating}"
+                    class="fa-solid fa-star"></i>
+                </div>
+                <p class="star-message">{{ getMessage(selectedRating) }}</p>
+                <button class="submit-btn" :class="{disabled : !selectedRating}" @click="submitRating()">Submit</button>
+            </div>
+        </div>
+
+        <!-- Result Page GAGAL! -->
+        <div class="result-page" id="result-page" v-show="resultpagefailed">
+            <!-- <img class="confeti" src="Asset/gif/confeti.gif" alt=""> -->
+            <div class="markonah-logo">
+                <img src="Asset/intro/markonah_logo_goodres.png" alt="" width="265px">
+            </div>
+
+            <div class="quiz-congratulations">
+                <p>Selamat Mbakyu telah menyelesaikan tantangan!</p>
+                <h5>Your Score</h5>
+                <div class="result-score">
+                    <img src="Asset/quiz/bi_coin-goodres.png" alt="" width="24px">
+                    <div class="score">{{ totalcoins }}</div>
+                </div>
+            </div>
+
+            <div class="try-again">
+                <div class="try-again-message">Great Effort Mbakyu! Kesuksesan adalah hal yang perlu di perjuangkan. Coba lagi ya Mbakyu! Semangat!</div>
+                <img class="marko3" src="Asset/arintro/marko3-goodres.png" alt="Marko 3" width="200px">
+            </div>
+
+            <button @click="windowsReload()" class="try-again-btn">Try Again</button>
+
+            <!-- Star Rating -->
+            <div class="result-rating" v-show="resultpagefailed && !closeresultrating">
+                <a href="#" class="close-btn" @click="closeRatingButtonClick()"><img src="Asset/result/close-button.png" alt="Close Button" width="24px"></a>
+                <!-- <div class="result-rating-message">How would you rate your experience with our company?</div> -->
+                <div class="result-rating-message">Bagaimana pengalaman Mbakyu bermain bersama Markonah?</div>
+                <div class="stars">
+                    <!-- <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i> -->
+                    <i v-for="(star,index) in stars" :key="index" 
+                    @click="rate(index+1)"
+                    :class="{active: index < selectedRating}"
+                    class="fa-solid fa-star"></i>
+                </div>
+                <p class="star-message">{{ getMessage(selectedRating) }}</p>
+                <button class="submit-btn" :class="{disabled : !selectedRating}" @click="submitRating()">Submit</button>
+            </div>
+        </div>
+
+        <!-- Coupon Page -->
+        <div class="coupon-page" id="coupon-page" v-show="couponpage">
+            <div class="coupon-details">
+                <img class="coupon-details-img" src="Asset/coupon/coupon-image-sample.png" alt="Coupon Details" width="296px">
+                <div class="coupon-details-data">
+                    <div class="coupon-details-data-img">
+                        <img src="Asset/quiz/Ellipse 23.png" alt="" width="48px">
+                    </div>
+                    <div class="coupon-details-data-bio">
+                        <div>
+                            <p>First Completion</p>
+                            <p>Name</p>
+                            <p>Phone</p>
+                        </div>
+                        <div>
+                            <p> : </p>
+                            <p> : </p>
+                            <p> : </p>
+                        </div>
+                        <div>
+                            <p>03 February 2023</p>
+                            <p>Nikita Willy</p>
+                            <p>08XXXXXX0223</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="coupon-button">
+                <button class="capture-btn">Capture your coupon</button>
+                <button @click="windowsReload()" class="back-to-home-btn">Back to Home</button>
+            </div>
+        </div>
+
+        
+
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14"></script>
+
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                intropage: true, // bikin true nanti
+                registpage: false,
+                arintropage: false,
+                arexperience: false,
+                arstartquiz: false,
+                targetfound: false,
+                markoclickme: false,
+                resultpagesuccess: false,
+                resultpagefailed: false,
+                closeresultrating: false,
+                couponpage: false,
+                stars: [1,2,3,4,5],
+                selectedRating: 0,
+                // Register and Login Data
+                userphonenumber: null,
+                userfirstname: null,
+                userlastname: null,
+                // Quiz Data
+                questions:[{
+                            id: 1,
+                            text: 'Ilmu apa yang mempelajari bagaimana mengoptimasi kegiatan manusia seperti produksi, pengelolaan dan ekonomi?',
+                            answers: [{
+                                    id: 1,
+                                    text: 'Teknik Industri',
+                                    isCorrect: true,
+                                    isSelected: false
+                                },
+                                {
+                                    id: 2,
+                                    text: 'Teknik Lingkungan',
+                                    isCorrect: false,
+                                    isSelected: false
+                                },
+                                {
+                                    id: 3,
+                                    text: 'Teknik Sipil',
+                                    isCorrect: false,
+                                    isSelected: false
+                                },
+                                {
+                                    id: 4,
+                                    text: 'Teknik Kelautan',
+                                    isCorrect: false,
+                                    isSelected: false
+                                }
+                            ],
+                        },
+                        {
+                            id: 2,
+                            text: 'Yang bukan dari prospek karir lulusan teknik industri Petra?',
+                            answers: [{
+                                    id: 1,
+                                    text: 'Entrepreneur',
+                                    isCorrect: false,
+                                    isSelected: false
+                                },
+                                {
+                                    id: 2,
+                                    text: 'Industrial Consultant',
+                                    isCorrect: false,
+                                    isSelected: false
+                                },
+                                {
+                                    id: 3,
+                                    text: 'Marketing Strategy',
+                                    isCorrect: true,
+                                    isSelected: false
+                                },
+                                {
+                                    id: 4,
+                                    text: 'Industrial Engineering',
+                                    isCorrect: false,
+                                    isSelected: false
+                                }
+                            ],
+                        },
+
+                    ],
+                currentQuestion: 0,
+                selectedanswer: null,
+                useranswers: [],
+                isanswered: false,
+                correctorincorrect: "",
+                iscorrect: null,
+                totalcoins: 0,
+                isclaimreward: null
+
+            },
+            computed: {
+                userFullName(){
+                    return `${this.userfirstname} ${this.userlastname}`;
+                },
+                // Quiz Data
+                question(){
+                    return this.questions[this.currentQuestion].questions;
+                },
+                answers(){
+                    return this.questions[this.currentQuestion].options;
+                }
+
+            },
+            mounted(){
+                const token = localStorage.getItem('tokenmarkonah');
+                const name = localStorage.getItem('namemarkonah');
+                const phonenumber = localStorage.getItem('phonenumbermarkonah');
+                if(token){
+                    alert("User has signed up!");
+                    this.intropage = false;
+                    this.arintropage = true;
+                }
+            },
+            methods:{
+                tryNowClick(){
+                    this.intropage = false;
+                    this.registpage = true;
+                },
+                async submitSignUp(){
+                    let formData = {
+                        name: this.userFullName,
+                        username: this.userphonenumber
+                    }
+                    await axios
+                        .post("http://staging.api.scanpedia.id/api/v1/login", formData)
+                        .then((response) => {
+                            console.log(response);
+                            localStorage.setItem("tokenmarkonah", response.data.data.token);
+                            localStorage.setItem("namemarkonah", response.data.data.user.name);
+                            localStorage.setItem("phonenumbermarkonah", response.data.data.user.phone_number);
+                            this.registpage = false;
+                            this.arintropage = true;    
+                        })
+                        .catch((error)=>{
+                            console.log(error);
+                            alert("Login Error. Please try again!")
+                        })
+                },
+                signUpClick(){
+                    this.registpage = false;
+                    this.arintropage = true;
+                },
+                activateRearCameraClick(){
+                    this.arintropage = false;
+                    this.arexperience = true;
+                },
+                clickMeStartTheQuiz(){
+                    this.markoclickme = true;
+                    this.arstartquiz = false;
+                    axios.get("http://staging.api.scanpedia.id/api/v1/questions/task", {
+                        headers: {
+                            "Authorization": `Bearer ${localStorage.getItem("tokenmarkonah")}`
+                        }
+                    })
+                    .then((response) =>{
+                        console.log(response);
+                        this.questions = response.data.data;
+                    })
+                    .catch((error)=>{
+                        console.log(error);
+                    })
+                },
+                checkAnswer(answer){
+                    this.selectedanswer = answer;
+                    this.useranswers[this.currentQuestion] = answer;
+                    this.isanswered = true;
+                    
+                    if(answer.option_key == this.questions[this.currentQuestion].answer_key){
+                        // alert("Your answer is correct");
+                        this.totalcoins = this.totalcoins + 10;
+                        this.correctorincorrect = "Benar!";
+                        this.iscorrect = true;
+                        console.log(this.totalcoins);
+                        document.getElementById("audio-yes").play();
+                        document.getElementById("audio-yes").muted = false;
+                        document.getElementById("marko-idle").setAttribute('visible', false);
+                        document.getElementById("marko-right").setAttribute('visible', false);
+                        document.getElementById("marko-wrong").setAttribute('visible', true);
+                    }
+                    else{
+                        // alert("Your answer is incorrect!");
+                        this.correctorincorrect = "Salah!"
+                        this.iscorrect = false;
+                        this.totalcoins = this.totalcoins;
+                        document.getElementById("audio-no").play();
+                        document.getElementById("audio-no").muted = false;
+                        document.getElementById("marko-idle").setAttribute('visible', false);
+                        document.getElementById("marko-right").setAttribute('visible', true);
+                        document.getElementById("marko-wrong").setAttribute('visible', false);
+                    }
+                },
+
+                answerClass(answer){
+                    if(this.selectedanswer == answer) {
+                        if(answer.option_key == this.questions[this.currentQuestion].answer_key){
+                            return 'correct'
+                        } else {
+                            return 'wrong'
+                        }
+                    }
+                    else if (this.isanswered == true) {
+                        return 'answered';
+                    }
+                },
+
+                nextQuestion: function (){
+                    this.selectedanswer = null;
+                    this.currentQuestion++;
+                    this.isanswered = false;
+                    this.correctorincorrect = "";
+                    this.iscorrect = null;
+                    document.getElementById("marko-idle").setAttribute('visible', true);
+                    document.getElementById("marko-right").setAttribute('visible', false);
+                    document.getElementById("marko-wrong").setAttribute('visible', false);
+                    if(this.currentQuestion >= this.questions.length){
+                        for(let i = 0; i < this.useranswers.length; i++ ){
+                            this.questions[i].answer_user = this.useranswers[i].option_key;
+                        }
+                        axios.post("http://staging.api.scanpedia.id/api/v1/questions/submit", {
+                            score : this.totalcoins,
+                            questions: this.questions
+                        }, {
+                            headers: {
+                                        "Authorization": `Bearer ${localStorage.getItem("tokenmarkonah")}`
+                                    }
+                        })
+                        .then((response) =>{
+                            console.log(response);
+                            this.isclaimreward = response.data.data.claim_reward;
+                            if(this.isclaimreward){
+                                this.resultpagesuccess = true;
+                                this.markoclickme = false;
+                                this.arexperience = false;
+                            }
+                            else{
+                                this.resultpagefailed = true;
+                                this.markoclickme = false;
+                                this.arexperience = false;
+                            }
+                        })
+                        .catch((error)=>{
+                            console.log(error);
+                        })
+                        alert("Quiz is finished");
+                        this.currentQuestion = 0;
+                    }
+                },
+
+
+                rate(rating){
+                    this.selectedRating = rating;
+                },
+                getMessage(rating){
+                    switch(rating){
+                        case 1:
+                            return 'Very Dissatisified';
+                        case 2:
+                            return 'Dissatisfied';
+                        case 3:
+                            return 'Neutral';
+                        case 4:
+                            return 'Satisfied';
+                        case 5:
+                            return 'Very Satisfied';
+                        default:
+                            return '';
+                    }
+                },
+                submitRating(){
+                    axios.post("http://staging.api.scanpedia.id/api/v1/rating", {
+                            rating: this.selectedRating
+                        }, {
+                            headers: {
+                                        "Authorization": `Bearer ${localStorage.getItem("tokenmarkonah")}`
+                                    }
+                        })
+                        .then((response) => {
+                            console.log(response);
+                            alert("Rating has been submitted!");
+                            this.closeresultrating = true;
+                        })
+                        .catch((error) =>{
+                            console.log(error);
+                            alert("Error");
+                        })
+                    
+                },
+                closeRatingButtonClick(){
+                    this.closeresultrating = true;
+                },
+                claimRewardsClick(){
+                    this.resultpagesuccess = false;
+                    this.couponpage = true;
+                },
+                windowsReload(){
+                    window.location.reload(true);
+                }
+            }
+        })
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function(){
+            const sceneEl = document.querySelector('a-scene');
+            const arSystem = sceneEl.systems["mindar-image-system"];
+            const rearCameraBtn = document.querySelector(".rear-camera-btn");
+            const targetMarkonah = document.getElementById("target-markonah");
+
+            const markoIdle = document.getElementById("marko-idle");
+            const markoRight = document.getElementById("marko-right");
+            const markoWrong = document.getElementById("marko-wrong");
+
+            const markoIdleVideo = document.getElementById("marko-idle-video");
+            const markoRightVideo = document.getElementById("marko-right-video");
+            const markoWrongVideo = document.getElementById("marko-wrong-video");
+            
+            // Audio
+            const audioHi = document.getElementById("audio-hi");
+            const audioYes = document.getElementById("audio-yes");
+            const audioNo = document.getElementById("audio-no");
+            
+            rearCameraBtn.addEventListener("click", () =>{
+                arSystem.start();
+                audioHi.play();
+                audioHi.muted = true;
+                audioYes.play();
+                audioYes.muted = true;
+                audioNo.play();
+                audioNo.muted = true;
+                
+            });
+            
+            
+
+            targetMarkonah.addEventListener("targetFound", event =>{
+                // Video Appears
+                // markoIdle.setAttribute('visible', true);
+                // markoRight.setAttribute('visible', false);
+                // markoWrong.setAttribute('visible', false);
+                markoIdleVideo.play();
+                markoRightVideo.play();
+                markoWrongVideo.play();
+                vm.targetfound = true;
+                if(vm.markoclickme){
+                    vm.arstartquiz = false;
+                }
+                else{
+                    vm.arstartquiz = true;
+                    // audioHi.pause();
+                    audioHi.play();
+                    audioHi.muted = false;
+                }
+
+                if(vm.iscorrect == true){
+                    markoIdle.setAttribute('visible', false);
+                    markoRight.setAttribute('visible', false);
+                    markoWrong.setAttribute('visible', true);
+                    audioYes.play();
+                    audioYes.muted = false;
+                }
+                else if(vm.iscorrect == false){
+                    markoIdle.setAttribute('visible', false);
+                    markoRight.setAttribute('visible', true);
+                    markoWrong.setAttribute('visible', false);
+                    audioNo.play();
+                    audioNo.muted = false;
+                }
+                else{
+                    markoIdle.setAttribute('visible', true);
+                    markoRight.setAttribute('visible', false);
+                    markoWrong.setAttribute('visible', false);
+                }
+
+                
+            });
+
+            targetMarkonah.addEventListener("targetLost", event => {
+                vm.arstartquiz = false;
+                vm.targetfound = false;
+            });
+
+            // arReady event triggered when ready
+            sceneEl.addEventListener("arReady", (event) => {
+                    // console.log("MindAR is ready")
+                });
+
+            // arError event triggered when something went wrong. Mostly browser compatbility issue
+            sceneEl.addEventListener("arError", (event) => {
+                // console.log("MindAR failed to start")
+            });
+
+            function playAudioHi(){
+                audioHi.play();
+            }
+
+
+        })
+    </script>
+
+</body>
+</html>

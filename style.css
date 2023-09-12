@@ -1,0 +1,735 @@
+*{
+    --primary: #eb4a12;
+    --secondary: #ffba00;
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-family: AvenirRoman;
+    src: url(Asset/font/Avenir-Roman.ttf);
+ }
+
+ body{
+    font-family: AvenirRoman;
+ }
+
+.intro-page, .registration-page, .ar-intro-page, .result-page{
+    height: 100vh;
+    background-image: url(Asset/intro/background.png);
+    background-size: contain;
+    /* background-repeat: repeat; */
+    background-position: center;
+}
+
+
+
+.intro-page .markonah-logo{
+    text-align: center;
+    margin: 30px auto;
+}
+
+.intro-page .scanpedia-logo{
+    text-align: center;
+    margin: 30px auto;
+}
+
+.intro-text p{
+    font-size: 16px;
+    text-align: center;
+    padding: 0px 20px;
+    line-height: 24px;
+    font-weight: 500;
+    color: #656565;
+}
+
+.intro-text span{
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.intro-page .try-now-btn{
+    /* margin: 50px auto 0px auto; iPhone */
+    margin: 50px auto 0px auto; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 312px ;
+    padding: 20px 16px;
+    border-radius: 41px;
+    border: 1px white solid;
+    font-family: AvenirRoman;
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    background-color: var(--primary);
+    
+}
+
+.registration-form .form{
+    display: flex;
+    flex-direction: column;
+    padding-top: 30px;
+}
+
+.registration-form label{
+    margin-left: 15px;
+    font-weight: 400;
+}
+
+.registration-form .form input{
+    width: 85%;
+    margin: 10px 10px;
+    padding: 12px 16px;
+    border-radius: 41px;
+    border: 1px solid #BDBDBD ;
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.13);
+}
+
+.registration-form .form button{
+    /* Iphone margin 240px */
+    margin: 290px auto 0px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 312px ;
+    padding: 20px 16px;
+    border-radius: 41px;
+    border: 1px var(--primary) solid;
+    font-family: AvenirRoman;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    background-color: var(--primary);
+}
+
+.ar-intro-page{
+    position: relative;
+}
+
+.ar-intro-page .ar-bubble{
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    bottom: 350px;
+    /* bottom: 300px; */
+
+    animation: zoom-in 0.8s ease forwards;
+}
+
+.ar-intro-page .rear-camera-btn{
+    width: 312px;
+    padding: 20px 16px;
+    border-radius: 41px;
+    border: 1px solid var(--primary);
+    background-color: var(--primary);
+    color: white;
+    font-family: AvenirRoman;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.20);
+
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    bottom: 135px;
+    /* bottom: 75px; */
+    z-index: 100;
+}
+
+.ar-intro-page .marko3{
+    position: absolute;
+    bottom : 115px;
+    /* bottom: 55px; */
+}
+
+
+.ar-experience{
+    position: relative;
+    height: 100vh;
+}
+
+.ar-experience .ar-overlay{
+    height: 100%;
+    width: 100%;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    background-color: rgb(0,0,0); /* Black fallback color */
+    background-color: rgba(0,0,0, 0.3); /* Black w/opacity */
+}
+
+.hole {
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20em;
+    height: 20em;
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7);
+    z-index: 100;
+    border-radius: 10px;
+}
+
+.scanner-border {
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width:20em;
+    z-index: 100;
+}
+
+.ar-guidance{
+    width: 312px;
+    border: 2px solid var(--primary);
+    border-radius: 11px;
+    padding: 8px 8px;
+    text-align: center;
+    background-color: #EFEFEF;
+
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: 50%;
+    z-index: 101;
+}
+
+.ar-guidance p{
+    color: var(--primary);
+    font-size: 16px;
+    font-weight: 500;
+    
+}
+
+.ar-start-quiz{
+    position: relative;
+}
+
+.ar-start-quiz .marko3, .ar-start-quiz .marko3-clickme{
+    position: absolute;
+    z-index: 101;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+}
+
+.ar-start-quiz .marko3{
+    top: 50px;
+    animation: zoom-in 1s ease forwards;
+}
+
+.ar-start-quiz .marko3-clickme{
+    top: 320px;
+    visibility: hidden;
+    animation: fadeIn 0.4s 0.4s forwards, zoom-in 0.4s ease forwards;
+    animation-delay: 1s;
+}
+
+
+.quiz-container{
+    position: relative;
+    margin: 0 auto;
+    top: 405px;
+    left: 0;
+    right: 0;
+    z-index: 200;
+
+    width: 343px;
+    height: 221px;
+    background-image: url(Asset/quiz/background.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.quiz-container img{
+    position: absolute;
+    top: -50px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 80px;
+    height: 80px;
+}
+
+.quiz-container .question-number{
+    font-size: 14px;
+    font-weight: 400;
+    color: #F68341;
+    padding-left: 15px;
+    padding-top: 15px;
+}
+
+.quiz-container .question{
+    position: absolute;
+    top: 10%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    color: #656565;
+    padding: 0px 5px;
+    display: flex;
+    align-items: center; /* Maybe Replaced? */
+    justify-content: center;
+    height: 63px; /* Three Rows of Question */
+  }
+  
+  .quiz-container .btn-grid{
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 1px;
+    margin: 5px 5px;
+    position: absolute;
+    /* top: 45%; */
+    right: 0px;
+    left: 0px;
+    bottom: 5%;
+    /* height: 81px; */
+  }
+  
+  .quiz-container .box{
+    padding: 10px 8px;
+    margin: 5px;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    color: #525252;
+    border-radius: 24px;
+    background: #FFBA00;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .correct{
+    background-color: #17A225 !important;
+    color: #FFF !important;
+  }
+
+  .wrong{
+    background-color: #DA6767 !important;
+    color: #FFF !important;
+  }
+
+  .answered{
+    pointer-events: none;
+    background-color: #989898 !important;
+    color: #525252 !important;
+  }
+
+  .quiz-score{
+    position: absolute;
+    top: 5%;
+    left: 30px;
+    z-index: 201;
+    background-color: #FFF;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 16px;
+    border-radius: 8px;
+    width: 60px;
+  }
+
+  .quiz-score p{
+    font-size: 17px;
+    font-weight: 700;
+    color: #525252;
+  }
+
+  .salahdialog, .benardialog{
+    position: absolute;
+    top: -35px;
+    right: 10px;
+    font-size: 17px ;
+    text-align: center;
+    z-index: 11000;
+
+    padding: 4px 8px;
+    border-radius: 34px;
+    background-color: #FFF;
+    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25);
+    font-weight: 700;
+  }
+
+  .salahdialog{
+    color: #DA6767;
+  }
+
+  .benardialog{
+    color: #17A225;
+  }
+
+  .next-question-btn, .questionnext{
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: 250px;
+    padding: 20px 16px;
+    border-radius: 41px;
+    border: 2px solid var(--primary);
+    box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.20);
+
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--primary);
+  }
+
+  .questionnextdisabled{
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: 250px;
+    padding: 20px 16px;
+    border-radius: 41px;
+    border: 2px solid var(--primary);
+    box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.20);
+
+    font-size: 16px;
+    font-weight: 600;
+    color: gray;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+
+  .result-page{
+    text-align: center;
+    position: relative;
+  }
+
+  .result-page .markonah-logo{
+    margin: 30px auto;
+  }
+
+  .result-page p{
+    font-size: 18px;
+    margin: 0px 45px 20px 45px;
+    color: #656565;
+    font-weight: 400;
+    line-height: 27px;
+  }
+
+  .result-page h5{
+    font-size: 24px;
+    color: var(--primary);
+    margin: 0px auto 10px auto;
+  }
+
+  .result-page .result-score{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .result-page .result-score .score{
+    font-size: 17px;
+    font-weight: 700;
+    color: #525252; 
+  }
+
+  .result-page .claim-rewards, .result-page .try-again{
+    margin-left: 130px;
+    margin-top: 30px;
+    width: 235px;
+    height: 174px;
+    text-align: left;
+    background-image: url(Asset/result/bubble-result.png);
+  }
+
+  .result-page .claim-rewards .claim-rewards-message,
+  .result-page .try-again .try-again-message{
+    font-size: 14px;
+    font-weight: 600;
+    color: #656565;
+    padding: 17px 30px;
+    line-height: 18px;
+  }
+
+
+  .result-page .claim-rewards .marko3,
+  .result-page .try-again .marko3{
+    position: absolute;
+    bottom: 140px;
+    /* bottom: 85px; */
+    left: 0px;
+  }
+
+  .result-page .claim-rewards-btn,
+  .result-page .try-again-btn{
+    position: relative;
+    width: 312px;
+    padding: 20px 16px;
+    border-radius: 41px;
+    border: 1px solid var(--primary);
+    background-color: var(--primary);
+    color: white;
+    font-family: AvenirRoman;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.20);
+
+    margin-top: 110px ;
+    /* margin-top: 190px; */
+  }
+
+  .confeti{
+    position: absolute;
+    top: 0%;
+    left: 0;
+  }
+
+  .result-rating{
+    position: absolute;
+    top: 38%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 324px;
+    height: 300px;
+    background-image: url(Asset/result/rating-background.png);
+    animation: slideUp 1s ease forwards ;
+  }
+
+  .result-rating .close-btn{
+    position: absolute;
+    right: 15px;
+    top: 10px;
+  }
+
+  .result-rating .result-rating-message{
+    padding: 60px 30px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #525252;
+    line-height: 100%;
+    background-image: url(Asset/result/rating-message.png);
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .result-rating .stars{
+    font-size: 35px;
+  }
+
+  .result-rating .star-message{
+    font: 14px;
+    margin: 5px auto;
+    font-weight: 500;
+  }
+
+  .result-rating .submit-btn.disabled{
+    cursor: not-allowed;
+    background-color: #C7CCD0;
+    color: #989898;
+    border: 2px solid #C7CCD0 ;
+    pointer-events: none;
+  }
+
+  .result-rating .submit-btn{
+    margin: 20px auto;
+    padding: 10px 20px;
+    width: 160px;
+    font-family: AvenirRoman;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--primary);
+    border-radius: 41px;
+    background-color: #FFF;
+    border: 2px solid var(--primary);
+  }
+
+ 
+
+  .stars{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .stars i {
+    color: #BDBDBD;
+    font-size: 35px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+    
+  .stars i.active {
+    color: #FFbA00;
+  }
+
+
+  .coupon-page{
+    position: relative;
+    height: 100vh;
+    background-image: url(Asset/coupon/background.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+  }
+
+  .coupon-page .coupon-details{
+    width: 318px;
+    height: 477px;
+    background-image: url(Asset/coupon/coupon-background.png);
+    background-position: center;
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: 50px;
+
+  }
+
+  .coupon-page .coupon-details .coupon-details-img{
+    display: flex;
+    margin: 20px auto;
+  }
+
+  .coupon-page .coupon-details .coupon-details-data{
+    text-align: center;
+    margin-top: 70px;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 0.5px;
+  }
+
+  .coupon-page .coupon-details .coupon-details-data .coupon-details-data-bio{
+    text-align: justify;
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+
+  .coupon-page .coupon-details .coupon-details-data .coupon-details-data-bio p{
+    color: #656565;
+    font-size: 13px;
+    font-weight: 400;
+  }
+
+  .coupon-page .coupon-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .coupon-page .coupon-button .capture-btn{
+    font-family: AvenirRoman;
+    font-size: 14px;
+    padding: 4px 16px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.80)  ;
+    background: rgba(255, 255, 255, 0.80);
+    backdrop-filter: blur(12px);
+
+    margin: 550px auto 10px auto;
+    cursor: pointer;
+  }
+
+  .coupon-page .coupon-button .back-to-home-btn{
+    font-family: AvenirRoman;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--primary);
+    background-color: #FFFFFF;
+    box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.20);
+    padding: 16px 16px;
+    width: 312px;
+    border-radius: 41px;
+    border: 2px solid var(--primary);
+    cursor: pointer;
+  }
+
+  .coupon-page .coupon-button .back-to-home-btn:hover{
+    background-color: var(--primary);
+    color: #FFFFFF;
+  }
+  
+  
+
+
+
+/* Animation */
+@keyframes zoom-in {
+    0%{
+        transform: scale(0.1);
+    }
+    100%{
+        transform: scale(1);
+    }
+
+}
+
+@keyframes fadeIn {
+    0% {
+      visibility: hidden;
+      opacity: 0;
+    }
+    100% {
+      visibility: visible;
+      opacity: 1;
+    }
+}
+
+@keyframes slideUp{
+    0%{
+        transform: translate(-50%, 150%);
+    }
+
+    100%{
+        transform: translate(-50%,-50%);
+    }
+}
+  
+
+/* Responsive Design */
+@media (min-height: 700px){
+  .intro-page .try-now-btn{
+    /* margin: 50px auto 0px auto; iPhone */
+    margin: 90px auto 0px auto; 
+  }
+
+  .registration-form .form button{
+    margin: 330px auto 0px auto;
+  }
+
+  .ar-intro-page .marko3{
+    bottom : 105px;
+  }
+
+  .result-page .claim-rewards-btn,
+  .result-page .try-again-btn{
+    margin-top: 170px;
+  }
+
+  .result-page .claim-rewards .marko3,
+  .result-page .try-again .marko3{
+    bottom: 130px;
+  }
+
+  .coupon-page .coupon-button .back-to-home-btn{
+    margin-top: 40px;
+  }
+
+}
+
+/* @media (min-height: 592px){
+  body{
+    transform: scale(0.8);
+  }
+} */
