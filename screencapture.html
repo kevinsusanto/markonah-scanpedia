@@ -1,73 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+  
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Screen Capture | Mobile</title>
+    <title>
+        How to take screenshot of
+        a div using JavaScript?
+    </title>
+  
+    <!-- Include from the CDN -->
+    <script src=
+"https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js">
+    </script>
+  
+    <!-- Include locally otherwise -->
+    <!-- <script src='html2canvas.js'></script> -->
+  
+    <style>
+        #photo {
+            border: 4px solid green;
+            padding: 4px;
+        }
+    </style>
 </head>
+  
 <body>
-    <div>
-        <button id="captureButton">Capture Screenshot</button>
-        <canvas id="screenshotCanvas" style="display: none;"></canvas>
-        <img id="screenshotImage" src="" alt="Screenshot" style="display: none;">
-        <button id="saveButton" style="display: none;">Save to Gallery</button>
+    <div id="photo">
+        <h1>GeeksforGeeks</h1>
+        Hello everyone! This is a
+        trial page for taking a
+        screenshot.
+        <br><br>
+        This is a dummy button!
+        <button> Dummy</button>
+        <br><br>
+        Click the button below to
+        take a screenshot of the div.
+        <br><br>
+  
+        <!-- Define the button 
+        that will be used to 
+        take the screenshot -->
+        <button onclick="takeshot()">
+            Take Screenshot
+        </button>
     </div>
-
-    <script>
-        const captureButton = document.getElementById('captureButton');
-        const screenshotCanvas = document.getElementById('screenshotCanvas');
-        const screenshotImage = document.getElementById('screenshotImage');
-        const saveButton = document.getElementById('saveButton'); // Add this button to your HTML
-
-        captureButton.addEventListener('click', () => {
-        const pageWidth = window.innerWidth;
-        const pageHeight = window.innerHeight;
-
-        screenshotCanvas.width = pageWidth;
-        screenshotCanvas.height = pageHeight;
-        const context = screenshotCanvas.getContext('2d');
-
-        // Create an Image object to hold the screenshot
-        const screenshotImageObj = new Image();
-
-        screenshotImageObj.onload = function () {
-            // Draw the screenshotImageObj onto the canvas
-            context.drawImage(screenshotImageObj, 0, 0, pageWidth, pageHeight);
-
-            // Display the canvas and "Save to Gallery" button
-            screenshotImage.style.display = 'none'; // Hide the image element
-            screenshotCanvas.style.display = 'block';
-            saveButton.style.display = 'block';
-        };
-
-        // Set the source of the Image object to the current page
-        screenshotImageObj.src = 'data:image/svg+xml,' + encodeURIComponent(new XMLSerializer().serializeToString(document));
-        });
-
-        saveButton.addEventListener('click', () => {
-        // Convert the canvas content to a Blob
-        screenshotCanvas.toBlob((blob) => {
-            // Create a new file name with a timestamp
-            const fileName = `screenshot_${Date.now()}.png`;
-
-            // Create a temporary <a> element to trigger the download
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = fileName;
-            a.style.display = 'none';
-
-            // Trigger a click event on the <a> element to start the download
-            document.body.appendChild(a);
-            a.click();
-
-            // Clean up by removing the <a> element and revoking the Blob URL
-            document.body.removeChild(a);
-            URL.revokeObjectURL(a.href);
-        }, 'image/png');
-        });
-
-
-
+    <h1>Screenshot:</h1>
+    <div id="output"></div>
+  
+    <script type="text/javascript">
+  
+        // Define the function 
+        // to screenshot the div
+        function takeshot() {
+            let div =
+                document.getElementById('photo');
+  
+            // Use the html2canvas
+            // function to take a screenshot
+            // and append it
+            // to the output div
+            html2canvas(div).then(
+                function (canvas) {
+                    document
+                    .getElementById('output')
+                    .appendChild(canvas);
+                })
+        }
     </script>
 </body>
+  
 </html>

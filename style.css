@@ -14,8 +14,12 @@
     font-family: AvenirRoman;
  }
 
+ [v-cloak]{
+  display: none;
+}
+
 .intro-page, .registration-page, .ar-intro-page, .result-page{
-    height: 100vh;
+    height: 100dvh;
     background-image: url(Asset/intro/background.png);
     background-size: contain;
     /* background-repeat: repeat; */
@@ -50,7 +54,11 @@
 
 .intro-page .try-now-btn{
     /* margin: 50px auto 0px auto; iPhone */
-    margin: 50px auto 0px auto; 
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    bottom: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -88,7 +96,11 @@
 
 .registration-form .form button{
     /* Iphone margin 240px */
-    margin: 290px auto 0px auto;
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    bottom: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -112,7 +124,7 @@
     margin: 0 auto;
     left: 0;
     right: 0;
-    bottom: 350px;
+    bottom: 250px;
     /* bottom: 300px; */
 
     animation: zoom-in 0.8s ease forwards;
@@ -135,14 +147,19 @@
     margin: 0 auto;
     left: 0;
     right: 0;
-    bottom: 135px;
+    bottom: 30px;
     /* bottom: 75px; */
     z-index: 100;
 }
 
+.ar-intro-page .rear-camera-btn:hover{
+  color: var(--primary);
+  background-color: white;
+}
+
 .ar-intro-page .marko3{
     position: absolute;
-    bottom : 115px;
+    bottom : 0px;
     /* bottom: 55px; */
 }
 
@@ -233,9 +250,9 @@
 
 
 .quiz-container{
-    position: relative;
+    position: absolute;
     margin: 0 auto;
-    top: 405px;
+    bottom: 200px;
     left: 0;
     right: 0;
     z-index: 200;
@@ -296,7 +313,7 @@
   }
   
   .quiz-container .box{
-    padding: 10px 8px;
+    padding: 12px 8px;
     margin: 5px;
     /* display: flex;
     justify-content: center;
@@ -375,8 +392,8 @@
     margin: 0 auto;
     left: 0;
     right: 0;
-    top: 250px;
-    padding: 20px 16px;
+    top: 230px;
+    padding: 16px 16px;
     border-radius: 41px;
     border: 2px solid var(--primary);
     box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.20);
@@ -401,7 +418,7 @@
     font-weight: 600;
     color: gray;
     pointer-events: none;
-    opacity: 0.5;
+    opacity: 0;
   }
 
 
@@ -416,7 +433,7 @@
 
   .result-page p{
     font-size: 18px;
-    margin: 0px 45px 20px 45px;
+    margin: 0px 30px 20px 30px;
     color: #656565;
     font-weight: 400;
     line-height: 27px;
@@ -463,14 +480,14 @@
   .result-page .claim-rewards .marko3,
   .result-page .try-again .marko3{
     position: absolute;
-    bottom: 140px;
+    bottom: 0px;
     /* bottom: 85px; */
     left: 0px;
   }
 
   .result-page .claim-rewards-btn,
   .result-page .try-again-btn{
-    position: relative;
+    position: absolute;
     width: 312px;
     padding: 20px 16px;
     border-radius: 41px;
@@ -482,8 +499,10 @@
     font-weight: 600;
     text-align: center;
     box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.20);
-
-    margin-top: 110px ;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    bottom: 50px;
     /* margin-top: 190px; */
   }
 
@@ -495,7 +514,7 @@
 
   .result-rating{
     position: absolute;
-    top: 38%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%,-50%);
     width: 324px;
@@ -591,7 +610,7 @@
     margin: 0 auto;
     left: 0;
     right: 0;
-    top: 50px;
+    top: 35px;
 
   }
 
@@ -632,13 +651,14 @@
     font-family: AvenirRoman;
     font-size: 14px;
     padding: 4px 16px;
-    border-radius: 4px;
-    border: 1px solid rgba(255, 255, 255, 0.80)  ;
+    /* border-radius: 4px; */
+    /* border: 1px solid rgba(255, 255, 255, 0.80)  ; */
     background: rgba(255, 255, 255, 0.80);
-    backdrop-filter: blur(12px);
-
-    margin: 550px auto 10px auto;
+    /* backdrop-filter: blur(12px); */
+    margin: 530px auto 10px auto;
     cursor: pointer;
+    text-align: center;
+    font-weight: 600;
   }
 
   .coupon-page .coupon-button .back-to-home-btn{
@@ -698,9 +718,8 @@
   
 
 /* Responsive Design */
-@media (min-height: 700px){
+/* @media (min-height: 700px){
   .intro-page .try-now-btn{
-    /* margin: 50px auto 0px auto; iPhone */
     margin: 90px auto 0px auto; 
   }
 
@@ -726,7 +745,49 @@
     margin-top: 40px;
   }
 
-}
+  .quiz-container{
+    top: 400px;
+  }
+
+} */
+
+/* @media (min-height: 720px){
+  .intro-page .try-now-btn{
+    margin: 120px auto 0px auto; 
+    
+  }
+
+  .registration-form .form button{
+    margin: 360px auto 0px auto;
+  }
+
+  .ar-intro-page .marko3{
+    bottom : 60px;
+  }
+
+  .result-page .claim-rewards-btn,
+  .result-page .try-again-btn{
+    margin-top: 170px;
+  }
+
+  .result-page .claim-rewards .marko3,
+  .result-page .try-again .marko3{
+    bottom: 85px;
+  }
+
+  .coupon-page .coupon-button .back-to-home-btn{
+    margin-top: 40px;
+  }
+
+  .quiz-container{
+    top: 400px;
+  }
+
+  .ar-intro-page .rear-camera-btn{
+    bottom: 80px ;
+  }
+
+} */
 
 /* @media (min-height: 592px){
   body{
