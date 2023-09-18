@@ -9,6 +9,7 @@
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.0/dist/mindar-image-aframe.prod.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script data-n-head="1" src="https://staging.api.scanpedia.id/marker/primeskills.analitycs.js" mode="client" async="" data-body="true" defer=""></script>
 </head>
 <body>
     <div id="app" class="app">
@@ -105,7 +106,7 @@
 
 
             <!-- AR TIME !!! -->
-            <a-scene mindar-image="filterMinCF:0.0001; filterBeta: 0.001; imageTargetSrc: image/markodoodlewhite4.mind; autoStart: false; uiScanning: #guide"
+            <a-scene mindar-image="filterMinCF:0.0001; filterBeta: 0.001; imageTargetSrc: image/targets4.mind; autoStart: false; uiScanning: #guide;"
             color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
             device-orientation-permission-ui="enabled: false" loading-screen="dotsColor: red; backgroundColor: black">
 
@@ -119,7 +120,6 @@
                 playsinline>
                     <source id="marko-idle-webm" src="Asset/webm/MARKONAH720x720-webm/Idle(720x720).webm">
                     <source id="marko-idle-mov" src="Asset/mov/Idle(720x720).mov">
-
                 </video>
                 
                 <video id="marko-right-video"
@@ -302,6 +302,9 @@
                 stars: [1,2,3,4,5],
                 selectedRating: 0,
 
+                // Marker
+                markerSrc: "",
+
                 // Register and Login Data
                 userphonenumber: null,
                 userfirstname: null,
@@ -421,6 +424,20 @@
                     this.intropage = false;
                     this.arintropage = true;
                 }
+
+                axios.get("https://staging.api.scanpedia.id/api/v1/markers/active", {
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem("tokenmarkonah")}`
+                    }
+                })
+                .then((response)=>{
+                    console.log(response);
+                    this.markerSrc = response.data.data.asset_mind;
+                    localStorage.setItem("markerURL", response.data.data.asset_mind);
+                })
+                .catch((error)=>{
+                    console.log(error);
+                })
             },
             methods:{
                 tryNowClick(){
@@ -456,6 +473,8 @@
                 activateRearCameraClick(){
                     this.arintropage = false;
                     this.arexperience = true;
+                    
+
                 },
                 clickMeStartTheQuiz(){
                     this.markoclickme = true;
@@ -637,6 +656,8 @@
             const rearCameraBtn = document.querySelector(".rear-camera-btn");
             const targetMarkonah = document.getElementById("target-markonah");
 
+            sceneEl.setAttribute("mindar-image", `imageTargetSrc: ${localStorage.getItem("markerURL")} `);
+            alert(localStorage.getItem("markerURL"));
             const markoIdle = document.getElementById("marko-idle");
             const markoRight = document.getElementById("marko-right");
             const markoWrong = document.getElementById("marko-wrong");
@@ -649,7 +670,8 @@
             const audioHi = document.getElementById("audio-hi");
             const audioYes = document.getElementById("audio-yes");
             const audioNo = document.getElementById("audio-no");
-            
+
+
             rearCameraBtn.addEventListener("click", () =>{
                 arSystem.start();
                 audioHi.play();
@@ -658,11 +680,8 @@
                 audioYes.muted = true;
                 audioNo.play();
                 audioNo.muted = true;
-                
             });
             
-            
-
             targetMarkonah.addEventListener("targetFound", event =>{
                 // Video Appears
                 // markoIdle.setAttribute('visible', true);
@@ -712,8 +731,10 @@
 
             // arReady event triggered when ready
             sceneEl.addEventListener("arReady", (event) => {
-                    // console.log("MindAR is ready")
-                });
+                // console.log("MindAR is ready");
+                // console.log(sceneEl);
+            });
+            
 
             // arError event triggered when something went wrong. Mostly browser compatbility issue
             sceneEl.addEventListener("arError", (event) => {
@@ -723,10 +744,72 @@
             function playAudioHi(){
                 audioHi.play();
             }
-
+            
 
         })
     </script>
 
+    <script>
+        // Get the text input
+        const firstnameinput = document.getElementById('first-name');
+
+        // Add keypress event listener
+        firstnameinput.addEventListener('keypress', function(event){
+            
+            // Get the key 
+            let key = event.key;
+            
+            let regex = new RegExp("^[a-zA-Z]+$");
+            
+            // Check if key is in the reg exp
+            if(!regex.test(key)){
+                
+                // Restrict the special characters
+                event.preventDefault();  
+                return false;
+            }
+        });
+
+        // Get the text input
+        const lastnameinput = document.getElementById('last-name');
+
+        // Add keypress event listener
+        lastnameinput.addEventListener('keypress', function(event){
+            
+            // Get the key 
+            let key = event.key;
+            
+            let regex = new RegExp("^[a-zA-Z]+$");
+            
+            // Check if key is in the reg exp
+            if(!regex.test(key)){
+                
+                // Restrict the special characters
+                event.preventDefault();  
+                return false;
+            }
+        });
+
+        // Get the text input
+        const registphoneinput = document.getElementById('regist-phone');
+
+        // Add keypress event listener
+        registphoneinput.addEventListener('keypress', function(event){
+            
+            // Get the key 
+            let key = event.key;
+            
+            let regex = new RegExp("^[0-9]+$");
+            
+            // Check if key is in the reg exp
+            if(!regex.test(key)){
+                
+                // Restrict the special characters
+                event.preventDefault();  
+                return false;
+            }
+        });
+
+    </script>
 </body>
 </html>
