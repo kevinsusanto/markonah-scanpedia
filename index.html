@@ -665,6 +665,20 @@
             const rearCameraBtn = document.querySelector(".rear-camera-btn");
             const targetMarkonah = document.getElementById("target-markonah");
 
+            const markerURL = localStorage.getItem("markerURL");
+            if(markerURL){
+                sceneEl.setAttribute("mindar-image", `imageTargetSrc: ${markerURL}`);
+                console.log("There is a marker");
+            } else {
+                setTimeout(function () {
+                    const markerURL = localStorage.getItem("markerURL");
+                    if(markerURL){
+                        sceneEl.setAttribute("mindar-image", `imageTargetSrc: ${markerURL}`);
+                        console.log("There is a marker after");
+                    }
+                }, 1000);
+            }
+
             sceneEl.setAttribute("mindar-image", `imageTargetSrc: ${localStorage.getItem("markerURL")} `);
             alert(localStorage.getItem("markerURL"));
             const markoIdle = document.getElementById("marko-idle");
