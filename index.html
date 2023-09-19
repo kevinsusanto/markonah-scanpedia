@@ -157,10 +157,30 @@
 
             <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-            <a-entity id="target-markonah" mindar-image-target="targetIndex: 0">
+            <a-entity id="target-markonah-1" mindar-image-target="targetIndex: 0">
                 <a-video id="marko-idle" src="#marko-idle-video" width="1.8" height="1.8" loop="true" autoplay="true" position="0 0.4 0" visible="false"></a-video>
                 <a-video id="marko-right" src="#marko-right-video" width="1.8" height="1.8" loop="true" autoplay="true" position="0 0.7 0" visible="false"></a-video>
                 <a-video id="marko-wrong" src="#marko-wrong-video" width="1.8" height="1.8" loop="true" autoplay="true" position="0 0.7 0" visible="false"></a-video>
+            </a-entity>
+            <a-entity id="target-markonah-2" mindar-image-target="targetIndex: 1">
+                <a-video id="marko-idle-2" src="#marko-idle-video" width="1.8" height="1.8" loop="true" autoplay="true" position="0 0.4 0" visible="false"></a-video>
+                <a-video id="marko-right-2" src="#marko-right-video" width="1.8" height="1.8" loop="true" autoplay="true" position="0 0.7 0" visible="false"></a-video>
+                <a-video id="marko-wrong-2" src="#marko-wrong-video" width="1.8" height="1.8" loop="true" autoplay="true" position="0 0.7 0" visible="false"></a-video>
+            </a-entity>
+            <a-entity id="target-markonah-3" mindar-image-target="targetIndex: 2">
+                <a-video id="marko-idle-3" src="#marko-idle-video" width="1.8" height="1.8" loop="true" autoplay="true" position="0 0.4 0" visible="false"></a-video>
+                <a-video id="marko-right-3" src="#marko-right-video" width="1.8" height="1.8" loop="true" autoplay="true" position="0 0.7 0" visible="false"></a-video>
+                <a-video id="marko-wrong-3" src="#marko-wrong-video" width="1.8" height="1.8" loop="true" autoplay="true" position="0 0.7 0" visible="false"></a-video>
+            </a-entity>
+            <a-entity id="target-markonah-4" mindar-image-target="targetIndex: 3">
+                <a-video id="marko-idle-4" src="#marko-idle-video" width="1.8" height="1.8" loop="true" autoplay="true" position="0 0.4 0" visible="false"></a-video>
+                <a-video id="marko-right-4" src="#marko-right-video" width="1.8" height="1.8" loop="true" autoplay="true" position="0 0.7 0" visible="false"></a-video>
+                <a-video id="marko-wrong-4" src="#marko-wrong-video" width="1.8" height="1.8" loop="true" autoplay="true" position="0 0.7 0" visible="false"></a-video>
+            </a-entity>
+            <a-entity id="target-markonah-5" mindar-image-target="targetIndex: 4">
+                <a-video id="marko-idle-5" src="#marko-idle-video" width="1.8" height="1.8" loop="true" autoplay="true" position="0 0.4 0" visible="false"></a-video>
+                <a-video id="marko-right-5" src="#marko-right-video" width="1.8" height="1.8" loop="true" autoplay="true" position="0 0.7 0" visible="false"></a-video>
+                <a-video id="marko-wrong-5" src="#marko-wrong-video" width="1.8" height="1.8" loop="true" autoplay="true" position="0 0.7 0" visible="false"></a-video>
             </a-entity>
 
             </a-scene>
@@ -514,9 +534,26 @@
                         console.log(this.totalcoins);
                         document.getElementById("audio-yes").play();
                         document.getElementById("audio-yes").muted = false;
+
                         document.getElementById("marko-idle").setAttribute('visible', false);
                         document.getElementById("marko-right").setAttribute('visible', false);
                         document.getElementById("marko-wrong").setAttribute('visible', true);
+                        
+                        document.getElementById("marko-idle-2").setAttribute('visible', false);
+                        document.getElementById("marko-right-2").setAttribute('visible', false);
+                        document.getElementById("marko-wrong-2").setAttribute('visible', true);
+                        
+                        document.getElementById("marko-idle-3").setAttribute('visible', false);
+                        document.getElementById("marko-right-3").setAttribute('visible', false);
+                        document.getElementById("marko-wrong-3").setAttribute('visible', true);
+
+                        document.getElementById("marko-idle-4").setAttribute('visible', false);
+                        document.getElementById("marko-right-4").setAttribute('visible', false);
+                        document.getElementById("marko-wrong-4").setAttribute('visible', true);
+
+                        document.getElementById("marko-idle-5").setAttribute('visible', false);
+                        document.getElementById("marko-right-5").setAttribute('visible', false);
+                        document.getElementById("marko-wrong-5").setAttribute('visible', true);
                     }
                     else{
                         // alert("Your answer is incorrect!");
@@ -525,9 +562,26 @@
                         this.totalcoins = this.totalcoins;
                         document.getElementById("audio-no").play();
                         document.getElementById("audio-no").muted = false;
+
                         document.getElementById("marko-idle").setAttribute('visible', false);
                         document.getElementById("marko-right").setAttribute('visible', true);
                         document.getElementById("marko-wrong").setAttribute('visible', false);
+                        
+                        document.getElementById("marko-idle-2").setAttribute('visible', false);
+                        document.getElementById("marko-right-2").setAttribute('visible', true);
+                        document.getElementById("marko-wrong-2").setAttribute('visible', false);
+                        
+                        document.getElementById("marko-idle-3").setAttribute('visible', false);
+                        document.getElementById("marko-right-3").setAttribute('visible', true);
+                        document.getElementById("marko-wrong-3").setAttribute('visible', false);
+                        
+                        document.getElementById("marko-idle-4").setAttribute('visible', false);
+                        document.getElementById("marko-right-4").setAttribute('visible', true);
+                        document.getElementById("marko-wrong-4").setAttribute('visible', false);
+
+                        document.getElementById("marko-idle-5").setAttribute('visible', false);
+                        document.getElementById("marko-right-5").setAttribute('visible', true);
+                        document.getElementById("marko-wrong-5").setAttribute('visible', false);
                     }
                 },
 
@@ -553,6 +607,22 @@
                     document.getElementById("marko-idle").setAttribute('visible', true);
                     document.getElementById("marko-right").setAttribute('visible', false);
                     document.getElementById("marko-wrong").setAttribute('visible', false);
+
+                    document.getElementById("marko-idle-2").setAttribute('visible', true);
+                    document.getElementById("marko-right-2").setAttribute('visible', false);
+                    document.getElementById("marko-wrong-2").setAttribute('visible', false);
+                    
+                    document.getElementById("marko-idle-3").setAttribute('visible', true);
+                    document.getElementById("marko-right-3").setAttribute('visible', false);
+                    document.getElementById("marko-wrong-3").setAttribute('visible', false);
+                    
+                    document.getElementById("marko-idle-4").setAttribute('visible', true);
+                    document.getElementById("marko-right-4").setAttribute('visible', false);
+                    document.getElementById("marko-wrong-4").setAttribute('visible', false);
+
+                    document.getElementById("marko-idle-5").setAttribute('visible', true);
+                    document.getElementById("marko-right-5").setAttribute('visible', false);
+                    document.getElementById("marko-wrong-5").setAttribute('visible', false);
                     if(this.currentQuestion >= this.questions.length){
                         for(let i = 0; i < this.useranswers.length; i++ ){
                             this.questions[i].answer_user = this.useranswers[i].option_key;
@@ -663,7 +733,11 @@
             const sceneEl = document.querySelector('a-scene');
             const arSystem = sceneEl.systems["mindar-image-system"];
             const rearCameraBtn = document.querySelector(".rear-camera-btn");
-            const targetMarkonah = document.getElementById("target-markonah");
+            const targetMarkonah1 = document.getElementById("target-markonah-1");
+            const targetMarkonah2 = document.getElementById("target-markonah-2");
+            const targetMarkonah3 = document.getElementById("target-markonah-3");
+            const targetMarkonah4 = document.getElementById("target-markonah-4");
+            const targetMarkonah5 = document.getElementById("target-markonah-5");
 
             const markerURL = localStorage.getItem("markerURL");
             if(markerURL){
@@ -676,14 +750,30 @@
                         sceneEl.setAttribute("mindar-image", `imageTargetSrc: ${markerURL}`);
                         console.log("There is a marker after");
                     }
-                }, 1000);
+                }, 2000);
             }
 
-            sceneEl.setAttribute("mindar-image", `imageTargetSrc: ${localStorage.getItem("markerURL")} `);
+            // sceneEl.setAttribute("mindar-image", "imageTargetSrc : image/targets4.mind");
             alert(localStorage.getItem("markerURL"));
             const markoIdle = document.getElementById("marko-idle");
             const markoRight = document.getElementById("marko-right");
             const markoWrong = document.getElementById("marko-wrong");
+
+            const markoIdle2 = document.getElementById("marko-idle-2");
+            const markoRight2 = document.getElementById("marko-right-2");
+            const markoWrong2 = document.getElementById("marko-wrong-2");
+            
+            const markoIdle3 = document.getElementById("marko-idle-3");
+            const markoRight3 = document.getElementById("marko-right-3");
+            const markoWrong3 = document.getElementById("marko-wrong-3");
+            
+            const markoIdle4 = document.getElementById("marko-idle-4");
+            const markoRight4 = document.getElementById("marko-right-4");
+            const markoWrong4 = document.getElementById("marko-wrong-4");
+            
+            const markoIdle5 = document.getElementById("marko-idle-5");
+            const markoRight5 = document.getElementById("marko-right-5");
+            const markoWrong5 = document.getElementById("marko-wrong-5");
 
             const markoIdleVideo = document.getElementById("marko-idle-video");
             const markoRightVideo = document.getElementById("marko-right-video");
@@ -705,7 +795,7 @@
                 audioNo.muted = true;
             });
             
-            targetMarkonah.addEventListener("targetFound", event =>{
+            targetMarkonah1.addEventListener("targetFound", event =>{
                 // Video Appears
                 // markoIdle.setAttribute('visible', true);
                 // markoRight.setAttribute('visible', false);
@@ -747,11 +837,195 @@
                 
             });
 
-            targetMarkonah.addEventListener("targetLost", event => {
+            targetMarkonah2.addEventListener("targetFound", event =>{
+                // Video Appears
+                // markoIdle.setAttribute('visible', true);
+                // markoRight.setAttribute('visible', false);
+                // markoWrong.setAttribute('visible', false);
+                markoIdleVideo.play();
+                markoRightVideo.play();
+                markoWrongVideo.play();
+                vm.targetfound = true;
+                if(vm.markoclickme){
+                    vm.arstartquiz = false;
+                }
+                else{
+                    vm.arstartquiz = true;
+                    // audioHi.pause();
+                    audioHi.play();
+                    audioHi.muted = false;
+                }
+
+                if(vm.iscorrect == true){
+                    markoIdle2.setAttribute('visible', false);
+                    markoRight2.setAttribute('visible', false);
+                    markoWrong2.setAttribute('visible', true);
+                    audioYes.play();
+                    audioYes.muted = false;
+                }
+                else if(vm.iscorrect == false){
+                    markoIdle2.setAttribute('visible', false);
+                    markoRight2.setAttribute('visible', true);
+                    markoWrong2.setAttribute('visible', false);
+                    audioNo.play();
+                    audioNo.muted = false;
+                }
+                else{
+                    markoIdle2.setAttribute('visible', true);
+                    markoRight2.setAttribute('visible', false);
+                    markoWrong2.setAttribute('visible', false);
+                }
+
+                
+            });
+
+            targetMarkonah3.addEventListener("targetFound", event =>{
+                // Video Appears
+                // markoIdle.setAttribute('visible', true);
+                // markoRight.setAttribute('visible', false);
+                // markoWrong.setAttribute('visible', false);
+                markoIdleVideo.play();
+                markoRightVideo.play();
+                markoWrongVideo.play();
+                vm.targetfound = true;
+                if(vm.markoclickme){
+                    vm.arstartquiz = false;
+                }
+                else{
+                    vm.arstartquiz = true;
+                    // audioHi.pause();
+                    audioHi.play();
+                    audioHi.muted = false;
+                }
+
+                if(vm.iscorrect == true){
+                    markoIdle3.setAttribute('visible', false);
+                    markoRight3.setAttribute('visible', false);
+                    markoWrong3.setAttribute('visible', true);
+                    audioYes.play();
+                    audioYes.muted = false;
+                }
+                else if(vm.iscorrect == false){
+                    markoIdle3.setAttribute('visible', false);
+                    markoRight3.setAttribute('visible', true);
+                    markoWrong3.setAttribute('visible', false);
+                    audioNo.play();
+                    audioNo.muted = false;
+                }
+                else{
+                    markoIdle3.setAttribute('visible', true);
+                    markoRight3.setAttribute('visible', false);
+                    markoWrong3.setAttribute('visible', false);
+                }
+
+                
+            });
+
+            targetMarkonah4.addEventListener("targetFound", event =>{
+                // Video Appears
+                // markoIdle.setAttribute('visible', true);
+                // markoRight.setAttribute('visible', false);
+                // markoWrong.setAttribute('visible', false);
+                markoIdleVideo.play();
+                markoRightVideo.play();
+                markoWrongVideo.play();
+                vm.targetfound = true;
+                if(vm.markoclickme){
+                    vm.arstartquiz = false;
+                }
+                else{
+                    vm.arstartquiz = true;
+                    // audioHi.pause();
+                    audioHi.play();
+                    audioHi.muted = false;
+                }
+
+                if(vm.iscorrect == true){
+                    markoIdle4.setAttribute('visible', false);
+                    markoRight4.setAttribute('visible', false);
+                    markoWrong4.setAttribute('visible', true);
+                    audioYes.play();
+                    audioYes.muted = false;
+                }
+                else if(vm.iscorrect == false){
+                    markoIdle4.setAttribute('visible', false);
+                    markoRight4.setAttribute('visible', true);
+                    markoWrong4.setAttribute('visible', false);
+                    audioNo.play();
+                    audioNo.muted = false;
+                }
+                else{
+                    markoIdle4.setAttribute('visible', true);
+                    markoRight4.setAttribute('visible', false);
+                    markoWrong4.setAttribute('visible', false);
+                }
+
+                
+            });
+
+            targetMarkonah5.addEventListener("targetFound", event =>{
+                // Video Appears
+                // markoIdle.setAttribute('visible', true);
+                // markoRight.setAttribute('visible', false);
+                // markoWrong.setAttribute('visible', false);
+                markoIdleVideo.play();
+                markoRightVideo.play();
+                markoWrongVideo.play();
+                vm.targetfound = true;
+                if(vm.markoclickme){
+                    vm.arstartquiz = false;
+                }
+                else{
+                    vm.arstartquiz = true;
+                    // audioHi.pause();
+                    audioHi.play();
+                    audioHi.muted = false;
+                }
+
+                if(vm.iscorrect == true){
+                    markoIdle5.setAttribute('visible', false);
+                    markoRight5.setAttribute('visible', false);
+                    markoWrong5.setAttribute('visible', true);
+                    audioYes.play();
+                    audioYes.muted = false;
+                }
+                else if(vm.iscorrect == false){
+                    markoIdle5.setAttribute('visible', false);
+                    markoRight5.setAttribute('visible', true);
+                    markoWrong5.setAttribute('visible', false);
+                    audioNo.play();
+                    audioNo.muted = false;
+                }
+                else{
+                    markoIdle5.setAttribute('visible', true);
+                    markoRight5.setAttribute('visible', false);
+                    markoWrong5.setAttribute('visible', false);
+                }
+
+                
+            });
+
+            targetMarkonah1.addEventListener("targetLost", event => {
                 vm.arstartquiz = false;
                 vm.targetfound = false;
             });
-
+            targetMarkonah2.addEventListener("targetLost", event => {
+                vm.arstartquiz = false;
+                vm.targetfound = false;
+            });
+            targetMarkonah3.addEventListener("targetLost", event => {
+                vm.arstartquiz = false;
+                vm.targetfound = false;
+            });
+            targetMarkonah4.addEventListener("targetLost", event => {
+                vm.arstartquiz = false;
+                vm.targetfound = false;
+            });
+            targetMarkonah5.addEventListener("targetLost", event => {
+                vm.arstartquiz = false;
+                vm.targetfound = false;
+            });
+            
             // arReady event triggered when ready
             sceneEl.addEventListener("arReady", (event) => {
                 // console.log("MindAR is ready");
