@@ -461,7 +461,7 @@
                 const phonenumber = localStorage.getItem('phonenumbermarkonah');
                 const id = localStorage.getItem('IDmarkonah');
                 if(token){
-                    alert("User has signed up!");
+                    alert("Pengguna sudah terdaftar");
                     this.intropage = false;
                     this.arintropage = true;
                 }
@@ -501,10 +501,11 @@
                             this.userID = response.data.data.user.id;
                             this.registpage = false;
                             this.arintropage = true;    
+                            window.location.reload(true);
                         })
                         .catch((error)=>{
                             console.log(error);
-                            alert("Login Error. Please try again!")
+                            alert("Sign Up Error. Please try again!");
                         })
                 },
                 signUpClick(){
@@ -528,6 +529,13 @@
                     .then((response) =>{
                         console.log(response);
                         this.questions = response.data.data;
+                        console.log(this.questions.length);
+                        if(this.questions.length < 10){
+                            alert("Sistem sedang dalam perbaikan. Silakan kembali di lain waktu");
+                            this.arintropage = true;
+                            this.markoclickme = false;
+                            this.arexperience = false;
+                        }
                     })
                     .catch((error)=>{
                         console.log(error);
@@ -750,11 +758,12 @@
             const targetMarkonah3 = document.getElementById("target-markonah-3");
             const targetMarkonah4 = document.getElementById("target-markonah-4");
             const targetMarkonah5 = document.getElementById("target-markonah-5");
-
+            
             const markerURL = localStorage.getItem("markerURL");
             if(markerURL){
                 sceneEl.setAttribute("mindar-image", `imageTargetSrc: ${markerURL}`);
                 console.log("There is a marker");
+
             } else {
                 setTimeout(function () {
                     const markerURL = localStorage.getItem("markerURL");
