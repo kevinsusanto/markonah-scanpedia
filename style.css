@@ -166,7 +166,7 @@
 
 .ar-experience{
     position: relative;
-    height: 100vh;
+    height: 100dvh;
 }
 
 .ar-experience .ar-overlay{
@@ -213,7 +213,7 @@
     margin: 0 auto;
     left: 0;
     right: 0;
-    top: 50%;
+    bottom: 100px;
     z-index: 101;
 }
 
@@ -252,7 +252,7 @@
 .quiz-container{
     position: absolute;
     margin: 0 auto;
-    bottom: 200px;
+    bottom: 100px;
     left: 0;
     right: 0;
     z-index: 200;
@@ -593,7 +593,7 @@
 
   .coupon-page{
     position: relative;
-    height: 100vh;
+    height: 100dvh;
     background-image: url(Asset/coupon/background.png);
     background-size: cover;
     background-position: center;
@@ -673,6 +673,8 @@
     border-radius: 41px;
     border: 2px solid var(--primary);
     cursor: pointer;
+    position: absolute;
+    bottom: 10px;
   }
 
   .coupon-page .coupon-button .back-to-home-btn:hover{
