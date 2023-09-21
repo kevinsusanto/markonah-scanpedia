@@ -248,6 +248,18 @@
     animation-delay: 1s;
 }
 
+.loading{
+  position: absolute;
+  z-index: 999999;
+  left: 50%;
+  top: 30%;
+  transform: translate(-50%,-50%);
+  margin: 0 auto;
+  color: var(--secondary);
+  font-size: 30px;
+  /* width: 70%; */
+  font-weight: 600;
+}
 
 .quiz-container{
     position: absolute;

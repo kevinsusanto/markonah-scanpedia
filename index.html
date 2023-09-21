@@ -33,7 +33,7 @@
     </script> -->
 </head>
 <body>
-    <div id="app" class="app">
+    <div id="app" class="app" v-cloak>
         <!-- Audio Source Asset -->
         <audio id="audio-hi" src="Asset/audio/mp3/Female Saying Hi 2.mp3"></audio>
         <audio id="audio-no" src="Asset/audio/mp3/Female Saying No 4.mp3"></audio>
@@ -101,10 +101,12 @@
                 <img class="marko3-clickme" alt="" src="Asset/arexperience/click-me-indo-goodres.png" width="287px">
             </div>
 
+            <!-- Loading Question -->
+            <div class="loading" v-if="loading">Memuat....</div>
             <!-- Quiz Time !!! -->
-            <div class="quiz-container" v-show="markoclickme" >
+            <div class="quiz-container" v-show="markoclickme && isLoadQuestion" >
                 <div class="question-number">{{ currentQuestion + 1 }} of {{questions.length == undefined ? 0 : questions.length}}</div>
-                <div class="question">{{ question == undefined ? "0" : question }}</div>
+                <div class="question">{{ question == undefined ? "" : question }}</div>
                 <img src="Asset/quiz/Ellipse 23-goodres.png" alt="Markonah Ellipse" width="78px">
                 <div class="btn-grid">
                   <!-- <a class="box box1">Semarang</a>
@@ -120,7 +122,7 @@
 
 
             <!-- Score -->
-            <div class="quiz-score" v-show="markoclickme">
+            <div class="quiz-score" v-show="markoclickme && isLoadQuestion">
                 <img src="Asset/quiz/bi_coin-goodres.png" alt="" width="24px">
                 <p>{{ totalcoins }}</p>
             </div>
@@ -315,7 +317,7 @@
             </div>
             <div class="coupon-button">
                 <p class="capture-btn">Screenshot dan simpan halaman ini untuk claim hadiahmu! </p>
-                <button @click="windowsReload()" class="back-to-home-btn">Back to Home</button>
+                <button @click="backToHomeClick()" class="back-to-home-btn">Back to Home</button>
             </div>
         </div>
 
@@ -353,6 +355,7 @@
                 userID: null,
 
                 // Quiz Data
+                loading: false,
                 questions:[{
                             id: 1,
                             text: 'Ilmu apa yang mempelajari bagaimana mengoptimasi kegiatan manusia seperti produksi, pengelolaan dan ekonomi?',
@@ -414,6 +417,7 @@
 
                     ],
                 currentQuestion: 0,
+                isLoadQuestion : false,
                 selectedanswer: null,
                 useranswers: [],
                 isanswered: false,
@@ -461,7 +465,6 @@
                 const phonenumber = localStorage.getItem('phonenumbermarkonah');
                 const id = localStorage.getItem('IDmarkonah');
                 if(token){
-                    alert("Pengguna sudah terdaftar");
                     this.intropage = false;
                     this.arintropage = true;
                 }
@@ -500,7 +503,7 @@
                             localStorage.setItem("IDmarkonah", response.data.data.user.id );
                             this.userID = response.data.data.user.id;
                             this.registpage = false;
-                            this.arintropage = true;    
+                            // this.arintropage = true;    
                             window.location.reload(true);
                         })
                         .catch((error)=>{
@@ -521,6 +524,7 @@
                 clickMeStartTheQuiz(){
                     this.markoclickme = true;
                     this.arstartquiz = false;
+                    this.loading = true;
                     axios.get("https://staging.api.scanpedia.id/api/v1/questions/task", {
                         headers: {
                             "Authorization": `Bearer ${localStorage.getItem("tokenmarkonah")}`
@@ -529,6 +533,8 @@
                     .then((response) =>{
                         console.log(response);
                         this.questions = response.data.data;
+                        this.isLoadQuestion = true;
+                        this.loading = false;
                         console.log(this.questions.length);
                         if(this.questions.length < 10){
                             alert("Sistem sedang dalam perbaikan. Silakan kembali di lain waktu");
@@ -671,6 +677,8 @@
                         })
                         .catch((error)=>{
                             console.log(error);
+                            alert("Sistem tidak berhasil mengirimkan data kuis. Silakan coba kembali");
+                            window.location.reload(true);
                         })
                         alert("Quiz is finished");
                         this.currentQuestion = 0;
@@ -743,6 +751,15 @@
 
                 windowsReload(){
                     window.location.reload(true);
+                },
+
+                backToHomeClick(){
+                    window.location.reload(true);
+                    localStorage.removeItem("tokenmarkonah");
+                    localStorage.removeItem("namemarkonah");
+                    localStorage.removeItem("phonenumbermarkonah");
+                    localStorage.removeItem("IDmarkonah");
+
                 }
             }
         })
@@ -1051,6 +1068,7 @@
             sceneEl.addEventListener("arReady", (event) => {
                 // console.log("MindAR is ready");
                 // console.log(sceneEl);
+                console.log("AR System is ready");
             });
             
 
