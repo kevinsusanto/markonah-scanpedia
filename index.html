@@ -70,11 +70,12 @@
             </div>
         </div>
 
+        
 
         <!-- AR Introduction  -->
         <div class="ar-intro-page" id="ar-intro-page" v-show="arintropage">
             <img class="ar-bubble" src="Asset/arintro/bubble-indo-goodres.png" alt="" width="280px">
-            <button class="rear-camera-btn" @click="activateRearCameraClick()">Activate Rear Camera</button>
+            <button v-show="rearcamerabtnvisible" class="rear-camera-btn" @click="activateRearCameraClick()">Activate Rear Camera</button>
             <img class="marko3" src="Asset/arintro/marko3-goodres.png" alt="Marko 3" width="170px">
         </div>
 
@@ -321,6 +322,13 @@
             </div>
         </div>
 
+        <!-- API Error Page -->
+        <div class="api-error-page" id="api-error-page" v-show="isAPIerror">
+            <h1>ERROR {{ errorcode }}</h1>
+            <p>Mohon maaf sedang ada gangguan sistem</p>
+            <p>{{ errormessage}}</p>
+            <button @click="windowsReloadAPIError()">Back To Home</button>
+        </div>
         
 
 
@@ -354,6 +362,7 @@
                 userlastname: null,
                 userID: null,
 
+                rearcamerabtnvisible : false,
                 // Quiz Data
                 loading: false,
                 questions:[{
@@ -430,8 +439,12 @@
                 couponusername : "",
                 couponphonenumber : "",
                 coupondate : "",
-                couponimage: ""
-
+                couponimage: "",
+                
+                // API Error
+                isAPIerror : false,
+                errorcode : "",
+                errormessage : "",
             },
             computed: {
                 userFullName(){
@@ -508,7 +521,12 @@
                         })
                         .catch((error)=>{
                             console.log(error);
-                            alert("Sign Up Error. Please try again!");
+                            this.isAPIerror = true;
+                            this.registpage = false;
+                            console.log(error.response.data.code);
+                            console.log(error.response.data.message);
+                            this.errorcode = error.response.data.code;
+                            this.errormessage = error.response.data.message;
                         })
                 },
                 signUpClick(){
@@ -545,6 +563,12 @@
                     })
                     .catch((error)=>{
                         console.log(error);
+                        this.isAPIerror = true;
+                        this.arexperience = false;
+                        console.log(error.response.data.code);
+                        console.log(error.response.data.message);
+                        this.errorcode = error.response.data.code;
+                        this.errormessage = error.response.data.message;
                     })
                 },
                 checkAnswer(answer){
@@ -677,8 +701,12 @@
                         })
                         .catch((error)=>{
                             console.log(error);
-                            alert("Sistem tidak berhasil mengirimkan data kuis. Silakan coba kembali");
-                            window.location.reload(true);
+                            this.isAPIerror = true;
+                            this.arexperience = false;
+                            console.log(error.response.data.code);
+                            console.log(error.response.data.message);
+                            this.errorcode = error.response.data.code;
+                            this.errormessage = error.response.data.message;
                         })
                         alert("Quiz is finished");
                         this.currentQuestion = 0;
@@ -745,12 +773,23 @@
                     })
                     .catch((error)=>{
                         console.log(error);
+                        this.isAPIerror = true;
+                        this.couponpage = false;
+                        console.log(error.response.data.code);
+                        console.log(error.response.data.message);
+                        this.errorcode = error.response.data.code;
+                        this.errormessage = error.response.data.message;
                     })
                 },
 
 
                 windowsReload(){
                     window.location.reload(true);
+                },
+
+                windowsReloadAPIError(){
+                    window.location.reload(true);
+                    this.isAPIerror = false;
                 },
 
                 backToHomeClick(){
@@ -791,6 +830,29 @@
                 }, 2000);
             }
 
+            var alertShown = false;
+
+            function checkMarkerURLChange(){
+                var currentMarkerURL = localStorage.getItem('markerURL');
+                var storedMarkerURL = sessionStorage.getItem('storedMarkerURL');
+                // console.log(currentMarkerURL);
+                // console.log(storedMarkerURL);
+
+                if(currentMarkerURL !== storedMarkerURL && storedMarkerURL !== "null"){
+                    if(!alertShown){
+                        alertShown = true;
+                        alert("AR Marker telah diganti. Halaman ini akan dimuat kembali untuk menggunakan AR Marker yang baru.");
+                        window.location.reload(true);
+                    }
+                }
+                
+            }
+            
+            setInterval(checkMarkerURLChange, 2000);
+            // checkMarkerURLChange();
+
+            var initialMarkerURL = localStorage.getItem('markerURL');
+            sessionStorage.setItem('storedMarkerURL', initialMarkerURL);
             // sceneEl.setAttribute("mindar-image", "imageTargetSrc : image/targets4.mind");
             // alert(localStorage.getItem("markerURL"));
             const markoIdle = document.getElementById("marko-idle");
@@ -1146,6 +1208,11 @@
             }
         });
 
+        window.onload = function (){
+            vm.rearcamerabtnvisible = true;
+        };
+
+        
     </script>
 </body>
 </html>
