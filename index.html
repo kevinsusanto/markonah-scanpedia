@@ -81,6 +81,13 @@
 
         <!-- AR Experience -->
         <div class="ar-experience" id="ar-experience" v-show="arexperience">
+            <!-- Testing GIF -->
+            <div class="marko-gif">
+                <img src="Asset/gif/marko/idle.gif" alt="Markonah Idle" width="380px" v-show="isIdleMarko">
+                <img src="Asset/gif/marko/right.gif" alt="Markonah Right" width="380px" v-show="isRightMarko">
+                <img src="Asset/gif/marko/wrong.gif" alt="Markonah Wrong" width="380px" v-show="isWrongMarko">
+            </div>
+
             <div class="ar-guidance" v-show="!targetfound && !markoclickme">
                 <p>Point your camera to</p>
                 <p>Markonah AR Marker</p>
@@ -329,9 +336,6 @@
             <p>{{ errormessage}}</p>
             <button @click="windowsReloadAPIError()">Back To Home</button>
         </div>
-        
-
-
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14"></script>
 
@@ -355,6 +359,11 @@
 
                 // Marker
                 markerSrc: "",
+
+                // Marko GIF
+                isIdleMarko: false,
+                isRightMarko: false,
+                isWrongMarko: false,
 
                 // Register and Login Data
                 userphonenumber: null,
@@ -553,6 +562,9 @@
                         this.questions = response.data.data;
                         this.isLoadQuestion = true;
                         this.loading = false;
+                        this.isIdleMarko = true;
+                        this.isRightMarko = false;
+                        this.isWrongMarko = false;
                         console.log(this.questions.length);
                         if(this.questions.length < 10){
                             alert("Sistem sedang dalam perbaikan. Silakan kembali di lain waktu");
@@ -585,25 +597,29 @@
                         document.getElementById("audio-yes").play();
                         document.getElementById("audio-yes").muted = false;
 
-                        document.getElementById("marko-idle").setAttribute('visible', false);
-                        document.getElementById("marko-right").setAttribute('visible', false);
-                        document.getElementById("marko-wrong").setAttribute('visible', true);
+                        // JAWABAN BENAR
+                        this.isIdleMarko = false;
+                        this.isRightMarko = true;
+                        this.isWrongMarko = false;
+                        // document.getElementById("marko-idle").setAttribute('visible', false);
+                        // document.getElementById("marko-right").setAttribute('visible', false);
+                        // document.getElementById("marko-wrong").setAttribute('visible', true);
                         
-                        document.getElementById("marko-idle-2").setAttribute('visible', false);
-                        document.getElementById("marko-right-2").setAttribute('visible', false);
-                        document.getElementById("marko-wrong-2").setAttribute('visible', true);
+                        // document.getElementById("marko-idle-2").setAttribute('visible', false);
+                        // document.getElementById("marko-right-2").setAttribute('visible', false);
+                        // document.getElementById("marko-wrong-2").setAttribute('visible', true);
                         
-                        document.getElementById("marko-idle-3").setAttribute('visible', false);
-                        document.getElementById("marko-right-3").setAttribute('visible', false);
-                        document.getElementById("marko-wrong-3").setAttribute('visible', true);
+                        // document.getElementById("marko-idle-3").setAttribute('visible', false);
+                        // document.getElementById("marko-right-3").setAttribute('visible', false);
+                        // document.getElementById("marko-wrong-3").setAttribute('visible', true);
 
-                        document.getElementById("marko-idle-4").setAttribute('visible', false);
-                        document.getElementById("marko-right-4").setAttribute('visible', false);
-                        document.getElementById("marko-wrong-4").setAttribute('visible', true);
+                        // document.getElementById("marko-idle-4").setAttribute('visible', false);
+                        // document.getElementById("marko-right-4").setAttribute('visible', false);
+                        // document.getElementById("marko-wrong-4").setAttribute('visible', true);
 
-                        document.getElementById("marko-idle-5").setAttribute('visible', false);
-                        document.getElementById("marko-right-5").setAttribute('visible', false);
-                        document.getElementById("marko-wrong-5").setAttribute('visible', true);
+                        // document.getElementById("marko-idle-5").setAttribute('visible', false);
+                        // document.getElementById("marko-right-5").setAttribute('visible', false);
+                        // document.getElementById("marko-wrong-5").setAttribute('visible', true);
                     }
                     else{
                         // alert("Your answer is incorrect!");
@@ -613,25 +629,29 @@
                         document.getElementById("audio-no").play();
                         document.getElementById("audio-no").muted = false;
 
-                        document.getElementById("marko-idle").setAttribute('visible', false);
-                        document.getElementById("marko-right").setAttribute('visible', true);
-                        document.getElementById("marko-wrong").setAttribute('visible', false);
+                        // JAWABAN SALAH
+                        this.isIdleMarko = false;
+                        this.isRightMarko = false;
+                        this.isWrongMarko = true;
+                        // document.getElementById("marko-idle").setAttribute('visible', false);
+                        // document.getElementById("marko-right").setAttribute('visible', true);
+                        // document.getElementById("marko-wrong").setAttribute('visible', false);
                         
-                        document.getElementById("marko-idle-2").setAttribute('visible', false);
-                        document.getElementById("marko-right-2").setAttribute('visible', true);
-                        document.getElementById("marko-wrong-2").setAttribute('visible', false);
+                        // document.getElementById("marko-idle-2").setAttribute('visible', false);
+                        // document.getElementById("marko-right-2").setAttribute('visible', true);
+                        // document.getElementById("marko-wrong-2").setAttribute('visible', false);
                         
-                        document.getElementById("marko-idle-3").setAttribute('visible', false);
-                        document.getElementById("marko-right-3").setAttribute('visible', true);
-                        document.getElementById("marko-wrong-3").setAttribute('visible', false);
+                        // document.getElementById("marko-idle-3").setAttribute('visible', false);
+                        // document.getElementById("marko-right-3").setAttribute('visible', true);
+                        // document.getElementById("marko-wrong-3").setAttribute('visible', false);
                         
-                        document.getElementById("marko-idle-4").setAttribute('visible', false);
-                        document.getElementById("marko-right-4").setAttribute('visible', true);
-                        document.getElementById("marko-wrong-4").setAttribute('visible', false);
+                        // document.getElementById("marko-idle-4").setAttribute('visible', false);
+                        // document.getElementById("marko-right-4").setAttribute('visible', true);
+                        // document.getElementById("marko-wrong-4").setAttribute('visible', false);
 
-                        document.getElementById("marko-idle-5").setAttribute('visible', false);
-                        document.getElementById("marko-right-5").setAttribute('visible', true);
-                        document.getElementById("marko-wrong-5").setAttribute('visible', false);
+                        // document.getElementById("marko-idle-5").setAttribute('visible', false);
+                        // document.getElementById("marko-right-5").setAttribute('visible', true);
+                        // document.getElementById("marko-wrong-5").setAttribute('visible', false);
                     }
                 },
 
@@ -654,25 +674,30 @@
                     this.isanswered = false;
                     this.correctorincorrect = "";
                     this.iscorrect = null;
-                    document.getElementById("marko-idle").setAttribute('visible', true);
-                    document.getElementById("marko-right").setAttribute('visible', false);
-                    document.getElementById("marko-wrong").setAttribute('visible', false);
 
-                    document.getElementById("marko-idle-2").setAttribute('visible', true);
-                    document.getElementById("marko-right-2").setAttribute('visible', false);
-                    document.getElementById("marko-wrong-2").setAttribute('visible', false);
-                    
-                    document.getElementById("marko-idle-3").setAttribute('visible', true);
-                    document.getElementById("marko-right-3").setAttribute('visible', false);
-                    document.getElementById("marko-wrong-3").setAttribute('visible', false);
-                    
-                    document.getElementById("marko-idle-4").setAttribute('visible', true);
-                    document.getElementById("marko-right-4").setAttribute('visible', false);
-                    document.getElementById("marko-wrong-4").setAttribute('visible', false);
+                    // QUIZ sedang IDLE
+                    this.isIdleMarko = true;
+                    this.isRightMarko = false;
+                    this.isWrongMarko = false;
+                    // document.getElementById("marko-idle").setAttribute('visible', true);
+                    // document.getElementById("marko-right").setAttribute('visible', false);
+                    // document.getElementById("marko-wrong").setAttribute('visible', false);
 
-                    document.getElementById("marko-idle-5").setAttribute('visible', true);
-                    document.getElementById("marko-right-5").setAttribute('visible', false);
-                    document.getElementById("marko-wrong-5").setAttribute('visible', false);
+                    // document.getElementById("marko-idle-2").setAttribute('visible', true);
+                    // document.getElementById("marko-right-2").setAttribute('visible', false);
+                    // document.getElementById("marko-wrong-2").setAttribute('visible', false);
+                    
+                    // document.getElementById("marko-idle-3").setAttribute('visible', true);
+                    // document.getElementById("marko-right-3").setAttribute('visible', false);
+                    // document.getElementById("marko-wrong-3").setAttribute('visible', false);
+                    
+                    // document.getElementById("marko-idle-4").setAttribute('visible', true);
+                    // document.getElementById("marko-right-4").setAttribute('visible', false);
+                    // document.getElementById("marko-wrong-4").setAttribute('visible', false);
+
+                    // document.getElementById("marko-idle-5").setAttribute('visible', true);
+                    // document.getElementById("marko-right-5").setAttribute('visible', false);
+                    // document.getElementById("marko-wrong-5").setAttribute('visible', false);
                     if(this.currentQuestion >= this.questions.length){
                         for(let i = 0; i < this.useranswers.length; i++ ){
                             this.questions[i].answer_user = this.useranswers[i].option_key;
@@ -904,6 +929,10 @@
                 markoRightVideo.play();
                 markoWrongVideo.play();
                 vm.targetfound = true;
+
+                vm.isIdleMarko = true;
+                vm.isRightMarko = false;
+                vm.isWrongMarko = false;
                 if(vm.markoclickme){
                     vm.arstartquiz = false;
                 }
@@ -914,25 +943,25 @@
                     audioHi.muted = false;
                 }
 
-                if(vm.iscorrect == true){
-                    markoIdle.setAttribute('visible', false);
-                    markoRight.setAttribute('visible', false);
-                    markoWrong.setAttribute('visible', true);
-                    audioYes.play();
-                    audioYes.muted = false;
-                }
-                else if(vm.iscorrect == false){
-                    markoIdle.setAttribute('visible', false);
-                    markoRight.setAttribute('visible', true);
-                    markoWrong.setAttribute('visible', false);
-                    audioNo.play();
-                    audioNo.muted = false;
-                }
-                else{
-                    markoIdle.setAttribute('visible', true);
-                    markoRight.setAttribute('visible', false);
-                    markoWrong.setAttribute('visible', false);
-                }
+                // if(vm.iscorrect == true){
+                //     markoIdle.setAttribute('visible', false);
+                //     markoRight.setAttribute('visible', false);
+                //     markoWrong.setAttribute('visible', true);
+                //     audioYes.play();
+                //     audioYes.muted = false;
+                // }
+                // else if(vm.iscorrect == false){
+                //     markoIdle.setAttribute('visible', false);
+                //     markoRight.setAttribute('visible', true);
+                //     markoWrong.setAttribute('visible', false);
+                //     audioNo.play();
+                //     audioNo.muted = false;
+                // }
+                // else{
+                //     markoIdle.setAttribute('visible', true);
+                //     markoRight.setAttribute('visible', false);
+                //     markoWrong.setAttribute('visible', false);
+                // }
 
                 
             });
@@ -946,6 +975,10 @@
                 markoRightVideo.play();
                 markoWrongVideo.play();
                 vm.targetfound = true;
+
+                vm.isIdleMarko = true;
+                vm.isRightMarko = false;
+                vm.isWrongMarko = false;
                 if(vm.markoclickme){
                     vm.arstartquiz = false;
                 }
@@ -956,25 +989,25 @@
                     audioHi.muted = false;
                 }
 
-                if(vm.iscorrect == true){
-                    markoIdle2.setAttribute('visible', false);
-                    markoRight2.setAttribute('visible', false);
-                    markoWrong2.setAttribute('visible', true);
-                    audioYes.play();
-                    audioYes.muted = false;
-                }
-                else if(vm.iscorrect == false){
-                    markoIdle2.setAttribute('visible', false);
-                    markoRight2.setAttribute('visible', true);
-                    markoWrong2.setAttribute('visible', false);
-                    audioNo.play();
-                    audioNo.muted = false;
-                }
-                else{
-                    markoIdle2.setAttribute('visible', true);
-                    markoRight2.setAttribute('visible', false);
-                    markoWrong2.setAttribute('visible', false);
-                }
+                // if(vm.iscorrect == true){
+                //     markoIdle2.setAttribute('visible', false);
+                //     markoRight2.setAttribute('visible', false);
+                //     markoWrong2.setAttribute('visible', true);
+                //     audioYes.play();
+                //     audioYes.muted = false;
+                // }
+                // else if(vm.iscorrect == false){
+                //     markoIdle2.setAttribute('visible', false);
+                //     markoRight2.setAttribute('visible', true);
+                //     markoWrong2.setAttribute('visible', false);
+                //     audioNo.play();
+                //     audioNo.muted = false;
+                // }
+                // else{
+                //     markoIdle2.setAttribute('visible', true);
+                //     markoRight2.setAttribute('visible', false);
+                //     markoWrong2.setAttribute('visible', false);
+                // }
 
                 
             });
@@ -988,6 +1021,10 @@
                 markoRightVideo.play();
                 markoWrongVideo.play();
                 vm.targetfound = true;
+
+                vm.isIdleMarko = true;
+                vm.isRightMarko = false;
+                vm.isWrongMarko = false;
                 if(vm.markoclickme){
                     vm.arstartquiz = false;
                 }
@@ -998,25 +1035,25 @@
                     audioHi.muted = false;
                 }
 
-                if(vm.iscorrect == true){
-                    markoIdle3.setAttribute('visible', false);
-                    markoRight3.setAttribute('visible', false);
-                    markoWrong3.setAttribute('visible', true);
-                    audioYes.play();
-                    audioYes.muted = false;
-                }
-                else if(vm.iscorrect == false){
-                    markoIdle3.setAttribute('visible', false);
-                    markoRight3.setAttribute('visible', true);
-                    markoWrong3.setAttribute('visible', false);
-                    audioNo.play();
-                    audioNo.muted = false;
-                }
-                else{
-                    markoIdle3.setAttribute('visible', true);
-                    markoRight3.setAttribute('visible', false);
-                    markoWrong3.setAttribute('visible', false);
-                }
+                // if(vm.iscorrect == true){
+                //     markoIdle3.setAttribute('visible', false);
+                //     markoRight3.setAttribute('visible', false);
+                //     markoWrong3.setAttribute('visible', true);
+                //     audioYes.play();
+                //     audioYes.muted = false;
+                // }
+                // else if(vm.iscorrect == false){
+                //     markoIdle3.setAttribute('visible', false);
+                //     markoRight3.setAttribute('visible', true);
+                //     markoWrong3.setAttribute('visible', false);
+                //     audioNo.play();
+                //     audioNo.muted = false;
+                // }
+                // else{
+                //     markoIdle3.setAttribute('visible', true);
+                //     markoRight3.setAttribute('visible', false);
+                //     markoWrong3.setAttribute('visible', false);
+                // }
 
                 
             });
@@ -1030,6 +1067,10 @@
                 markoRightVideo.play();
                 markoWrongVideo.play();
                 vm.targetfound = true;
+
+                vm.isIdleMarko = true;
+                vm.isRightMarko = false;
+                vm.isWrongMarko = false;
                 if(vm.markoclickme){
                     vm.arstartquiz = false;
                 }
@@ -1040,25 +1081,25 @@
                     audioHi.muted = false;
                 }
 
-                if(vm.iscorrect == true){
-                    markoIdle4.setAttribute('visible', false);
-                    markoRight4.setAttribute('visible', false);
-                    markoWrong4.setAttribute('visible', true);
-                    audioYes.play();
-                    audioYes.muted = false;
-                }
-                else if(vm.iscorrect == false){
-                    markoIdle4.setAttribute('visible', false);
-                    markoRight4.setAttribute('visible', true);
-                    markoWrong4.setAttribute('visible', false);
-                    audioNo.play();
-                    audioNo.muted = false;
-                }
-                else{
-                    markoIdle4.setAttribute('visible', true);
-                    markoRight4.setAttribute('visible', false);
-                    markoWrong4.setAttribute('visible', false);
-                }
+                // if(vm.iscorrect == true){
+                //     markoIdle4.setAttribute('visible', false);
+                //     markoRight4.setAttribute('visible', false);
+                //     markoWrong4.setAttribute('visible', true);
+                //     audioYes.play();
+                //     audioYes.muted = false;
+                // }
+                // else if(vm.iscorrect == false){
+                //     markoIdle4.setAttribute('visible', false);
+                //     markoRight4.setAttribute('visible', true);
+                //     markoWrong4.setAttribute('visible', false);
+                //     audioNo.play();
+                //     audioNo.muted = false;
+                // }
+                // else{
+                //     markoIdle4.setAttribute('visible', true);
+                //     markoRight4.setAttribute('visible', false);
+                //     markoWrong4.setAttribute('visible', false);
+                // }
 
                 
             });
@@ -1072,6 +1113,10 @@
                 markoRightVideo.play();
                 markoWrongVideo.play();
                 vm.targetfound = true;
+
+                vm.isIdleMarko = true;
+                vm.isRightMarko = false;
+                vm.isWrongMarko = false;
                 if(vm.markoclickme){
                     vm.arstartquiz = false;
                 }
@@ -1082,25 +1127,25 @@
                     audioHi.muted = false;
                 }
 
-                if(vm.iscorrect == true){
-                    markoIdle5.setAttribute('visible', false);
-                    markoRight5.setAttribute('visible', false);
-                    markoWrong5.setAttribute('visible', true);
-                    audioYes.play();
-                    audioYes.muted = false;
-                }
-                else if(vm.iscorrect == false){
-                    markoIdle5.setAttribute('visible', false);
-                    markoRight5.setAttribute('visible', true);
-                    markoWrong5.setAttribute('visible', false);
-                    audioNo.play();
-                    audioNo.muted = false;
-                }
-                else{
-                    markoIdle5.setAttribute('visible', true);
-                    markoRight5.setAttribute('visible', false);
-                    markoWrong5.setAttribute('visible', false);
-                }
+                // if(vm.iscorrect == true){
+                //     markoIdle5.setAttribute('visible', false);
+                //     markoRight5.setAttribute('visible', false);
+                //     markoWrong5.setAttribute('visible', true);
+                //     audioYes.play();
+                //     audioYes.muted = false;
+                // }
+                // else if(vm.iscorrect == false){
+                //     markoIdle5.setAttribute('visible', false);
+                //     markoRight5.setAttribute('visible', true);
+                //     markoWrong5.setAttribute('visible', false);
+                //     audioNo.play();
+                //     audioNo.muted = false;
+                // }
+                // else{
+                //     markoIdle5.setAttribute('visible', true);
+                //     markoRight5.setAttribute('visible', false);
+                //     markoWrong5.setAttribute('visible', false);
+                // }
 
                 
             });
@@ -1108,22 +1153,72 @@
             targetMarkonah1.addEventListener("targetLost", event => {
                 vm.arstartquiz = false;
                 vm.targetfound = false;
+
+                if(vm.markoclickme){
+                    vm.isIdleMarko = true;
+                    vm.isRightMarko = false;
+                    vm.isWrongMarko = false;
+                } else {
+                    vm.isIdleMarko = false;
+                    vm.isRightMarko = false;
+                    vm.isWrongMarko = false;
+                }
             });
             targetMarkonah2.addEventListener("targetLost", event => {
                 vm.arstartquiz = false;
                 vm.targetfound = false;
+                if(vm.markoclickme){
+                    vm.isIdleMarko = true;
+                    vm.isRightMarko = false;
+                    vm.isWrongMarko = false;
+                } else {
+                    vm.isIdleMarko = false;
+                    vm.isRightMarko = false;
+                    vm.isWrongMarko = false;
+                }
+
             });
             targetMarkonah3.addEventListener("targetLost", event => {
                 vm.arstartquiz = false;
                 vm.targetfound = false;
+                if(vm.markoclickme){
+                    vm.isIdleMarko = true;
+                    vm.isRightMarko = false;
+                    vm.isWrongMarko = false;
+                } else {
+                    vm.isIdleMarko = false;
+                    vm.isRightMarko = false;
+                    vm.isWrongMarko = false;
+                }
+
             });
             targetMarkonah4.addEventListener("targetLost", event => {
                 vm.arstartquiz = false;
                 vm.targetfound = false;
+                if(vm.markoclickme){
+                    vm.isIdleMarko = true;
+                    vm.isRightMarko = false;
+                    vm.isWrongMarko = false;
+                } else {
+                    vm.isIdleMarko = false;
+                    vm.isRightMarko = false;
+                    vm.isWrongMarko = false;
+                }
+
             });
             targetMarkonah5.addEventListener("targetLost", event => {
                 vm.arstartquiz = false;
                 vm.targetfound = false;
+                if(vm.markoclickme){
+                    vm.isIdleMarko = true;
+                    vm.isRightMarko = false;
+                    vm.isWrongMarko = false;
+                } else {
+                    vm.isIdleMarko = false;
+                    vm.isRightMarko = false;
+                    vm.isWrongMarko = false;
+                }
+
             });
             
             // arReady event triggered when ready

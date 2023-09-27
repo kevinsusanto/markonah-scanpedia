@@ -11,6 +11,12 @@
 		},
 		{
 			"path": "../ar-new-proposal"
+		},
+		{
+			"path": "../cimb-ar-trivia-rev1"
+		},
+		{
+			"path": "../scanpedia-marker-compiler"
 		}
 	],
 	"settings": {
