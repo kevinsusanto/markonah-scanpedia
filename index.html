@@ -1304,7 +1304,10 @@
         });
 
         window.onload = function (){
-            vm.rearcamerabtnvisible = true;
+            console.log("Windows is loaded");
+            setTimeout(function () {
+                vm.rearcamerabtnvisible = true;
+            }, 2000); // 2000 milliseconds = 2 seconds
         };
 
         
