@@ -3,12 +3,10 @@ name: ci
 on:
   push:
     branches:
-      - main
-      - master
+      - production
   pull_request:
     branches:
-      - main
-      - master
+      - production
 
 jobs:
   ci:
@@ -27,7 +25,7 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ftp.primeverse.id
-          username: staging_markonah@staging.scanpedia.id
+          username: markonah@markonah.scanpedia.id
           password: mamangsekayu97
           port: 21
 
