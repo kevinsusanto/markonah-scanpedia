@@ -1,6 +1,6 @@
 *{
-    --primary: #eb4a12;
-    --secondary: #ffba00;
+    --primary: #02418A;
+    --secondary: #DA2A1D;
     margin: 0;
     padding: 0;
 }
@@ -20,10 +20,11 @@
 
 .intro-page, .registration-page, .ar-intro-page, .result-page, .api-error-page{
     height: 100dvh;
-    background-image: url(Asset/intro/background.png);
-    background-size: contain;
-    /* background-repeat: repeat; */
-    background-position: center;
+    /* background-color: aliceblue; */
+    /* background-image: url(Asset/ntmc/background_intro_transparent.png);
+    background-size: 35%;
+    background-repeat: repeat; */
+    /* background-position: center; */
 }
 
 
@@ -31,6 +32,10 @@
 .intro-page .markonah-logo{
     text-align: center;
     margin: 30px auto;
+}
+
+.intro-page .markonah-logo h1{
+  font-size: 3rem;
 }
 
 .intro-page .scanpedia-logo{
@@ -43,8 +48,9 @@
     text-align: center;
     padding: 0px 20px;
     line-height: 24px;
-    font-weight: 500;
-    color: #656565;
+    font-weight: 700;
+    color: var(--secondary);
+    margin-top: 80px;
 }
 
 .intro-text span{
@@ -297,14 +303,14 @@
     left: 0;
     right: 0;
     margin: 0 auto;
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    /* height: 80px; */
 }
 
 .quiz-container .question-number{
     font-size: 14px;
-    font-weight: 400;
-    color: #F68341;
+    font-weight: 700;
+    color: var(--secondary);
     padding-left: 15px;
     padding-top: 15px;
 }
@@ -345,9 +351,9 @@
     /* display: flex;
     justify-content: center;
     align-items: center; */
-    color: #525252;
+    color: #FFFFFF;
     border-radius: 24px;
-    background: #FFBA00;
+    background: var(--primary);
     box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
     text-align: center;
     font-size: 12px;
