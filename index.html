@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NTMC | Scanpedia</title>
-    <link rel="stylesheet" href="style.css?ver=8">
+    <link rel="stylesheet" href="style.css?ver=9">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.0/dist/mindar-image-aframe.prod.js"></script>
@@ -25,14 +25,14 @@
     </script> -->
 
     <!-- Script Google Analytics for the LIVE version -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-24GEVZB6XY"></script>
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-24GEVZB6XY"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
     gtag('config', 'G-24GEVZB6XY');
-    </script>
+    </script> -->
 </head>
 <body>
     <div id="app" class="app" v-cloak>
@@ -49,10 +49,12 @@
             </div>
             <div class="scanpedia-logo">
                 <img src="Asset/ntmc/LOGO-NTMC.png" alt="" width="244px">
-                <img style="margin-top: 40px;" src="Asset/ntmc/Powered By Scanpedia.png" alt="" width="180px">
+            </div>
+            <div class="scanpedia-logo">
+                <img src="Asset/ntmc/Powered By Scanpedia.png" alt="" width="180px">
             </div>
             <div class="intro-text">
-                <p>Rasakan pengalaman seru bersama <span>AR NTMC</span> dan dapatkan <span> bonusnya!</span></p>
+                <p>Rasakan pengalaman seru bersama <span>AR NTMC</span> </p>
             </div>
             <button class="try-now-btn" @click="tryNowClick()">Play Now</button>
         </div>
@@ -80,7 +82,7 @@
         <div class="ar-intro-page" id="ar-intro-page" v-show="arintropage">
             <img class="ar-bubble" src="Asset/ntmc/SelamatDatang2.png" alt="" width="280px">
             <button v-show="rearcamerabtnvisible" class="rear-camera-btn" @click="activateRearCameraClick()">Activate Rear Camera</button>
-            <img class="marko3" src="Asset/arintro/marko3-goodres.png" alt="Marko 3" width="170px">
+            <img class="marko3" src="Asset/ntmc/NTMC_mascot.png" alt="Marko 3" width="270px">
         </div>
 
         <!-- AR Experience -->
@@ -94,7 +96,7 @@
 
             <div class="ar-guidance" v-show="!targetfound && !markoclickme">
                 <p>Point your camera to</p>
-                <p>Markonah AR Marker</p>
+                <p>NTMC AR Marker</p>
                 <img src="Asset/gif/besar.gif" alt="marko GIF" width="104px">
             </div>
             <div id="guide" v-show="!targetfound">
@@ -182,7 +184,7 @@
         <div class="result-page" id="result-page" v-show="resultpagesuccess">
             <img class="confeti" src="Asset/gif/confeti.gif" alt="">
             <div class="markonah-logo">
-                <img src="Asset/ntmc/LOGO-NTMC.png" alt="" width="200px">
+                <img src="Asset/ntmc/LOGO-NTMC.png" alt="" width="120px">
             </div>
 
             <div class="quiz-congratulations">
@@ -196,7 +198,7 @@
 
             <div class="claim-rewards">
                 <div class="claim-rewards-message">Good Job! Selamat, Anda berhasil menyelesaikan tantangan dengan baik. Terus jaga kerja baik Anda !</div>
-                <img class="marko3" src="Asset/arintro/marko3-goodres.png" alt="Marko 3" width="200px">
+                <img class="marko3" src="Asset/ntmc/NTMC_mascot.png" alt="Marko 3" width="270px">
             </div>
 
             <!-- <button class="claim-rewards-btn" @click="claimRewardsClick()">Claim Rewards</button> -->
@@ -227,7 +229,7 @@
         <div class="result-page" id="result-page" v-show="resultpagefailed">
             <!-- <img class="confeti" src="Asset/gif/confeti.gif" alt=""> -->
             <div class="markonah-logo">
-                <img src="Asset/ntmc/LOGO-NTMC.png" alt="" width="200px">
+                <img src="Asset/ntmc/LOGO-NTMC.png" alt="" width="120px">
             </div>
 
             <div class="quiz-congratulations">
@@ -241,7 +243,7 @@
 
             <div class="try-again">
                 <div class="try-again-message">Great Effort! Kesuksesan adalah hal yang perlu di perjuangkan. Coba lagi ya! Semangat!</div>
-                <img class="marko3" src="Asset/arintro/marko3-goodres.png" alt="Marko 3" width="200px">
+                <img class="marko3" src="Asset/ntmc/NTMC_mascot.png" alt="Marko 3" width="270px">
             </div>
 
             <button @click="windowsReload()" class="try-again-btn">Try Again</button>
@@ -462,7 +464,7 @@
                     this.arintropage = true;
                 }
 
-                axios.get("https://api.scanpedia.id/api/v1/markers/active", {
+                axios.get("https://staging.api.scanpedia.id/api/v1/markers/active", {
                     headers: {
                         "Authorization": `Bearer ${localStorage.getItem("tokenmarkonah")}`
                     }
@@ -487,7 +489,7 @@
                         username: this.userphonenumber
                     }
                     await axios
-                        .post("https://api.scanpedia.id/api/v1/login", formData)
+                        .post("https://staging.api.scanpedia.id/api/v1/login", formData)
                         .then((response) => {
                             console.log(response);
                             localStorage.setItem("tokenmarkonah", response.data.data.token);
@@ -523,7 +525,7 @@
                     this.markoclickme = true;
                     this.arstartquiz = false;
                     this.loading = true;
-                    axios.get("https://api.scanpedia.id/api/v1/questions/task", {
+                    axios.get("https://staging.api.scanpedia.id/api/v1/questions/task", {
                         headers: {
                             "Authorization": `Bearer ${localStorage.getItem("tokenmarkonah")}`
                         }
@@ -628,7 +630,7 @@
                         for(let i = 0; i < this.useranswers.length; i++ ){
                             this.questions[i].answer_user = this.useranswers[i].option_key;
                         }
-                        axios.post("https://api.scanpedia.id/api/v1/questions/submit", {
+                        axios.post("https://staging.api.scanpedia.id/api/v1/questions/submit", {
                             score : this.totalcoins,
                             questions: this.questions
                         }, {
@@ -685,7 +687,7 @@
                     }
                 },
                 submitRating(){
-                    axios.post("https://api.scanpedia.id/api/v1/rating", {
+                    axios.post("https://staging.api.scanpedia.id/api/v1/rating", {
                             rating: this.selectedRating
                         }, {
                             headers: {
@@ -710,7 +712,7 @@
                     this.resultpagesuccess = false;
                     this.couponpage = true;
 
-                    axios.get(`https://api.scanpedia.id/api/v1/coupons/user/${localStorage.getItem("IDmarkonah")}/reward`, {
+                    axios.get(`https://staging.api.scanpedia.id/api/v1/coupons/user/${localStorage.getItem("IDmarkonah")}/reward`, {
                         headers: {
                             "Authorization": `Bearer ${localStorage.getItem("tokenmarkonah")}`
                         }
@@ -741,6 +743,10 @@
                 windowsReloadAPIError(){
                     window.location.reload(true);
                     this.isAPIerror = false;
+                    localStorage.removeItem("tokenmarkonah");
+                    localStorage.removeItem("namemarkonah");
+                    localStorage.removeItem("phonenumbermarkonah");
+                    localStorage.removeItem("IDmarkonah");
                 },
 
                 backToHomeClick(){
@@ -806,29 +812,6 @@
             sessionStorage.setItem('storedMarkerURL', initialMarkerURL);
             // sceneEl.setAttribute("mindar-image", "imageTargetSrc : image/targets4.mind");
             // alert(localStorage.getItem("markerURL"));
-            // const markoIdle = document.getElementById("marko-idle");
-            // const markoRight = document.getElementById("marko-right");
-            // const markoWrong = document.getElementById("marko-wrong");
-
-            // const markoIdle2 = document.getElementById("marko-idle-2");
-            // const markoRight2 = document.getElementById("marko-right-2");
-            // const markoWrong2 = document.getElementById("marko-wrong-2");
-            
-            // const markoIdle3 = document.getElementById("marko-idle-3");
-            // const markoRight3 = document.getElementById("marko-right-3");
-            // const markoWrong3 = document.getElementById("marko-wrong-3");
-            
-            // const markoIdle4 = document.getElementById("marko-idle-4");
-            // const markoRight4 = document.getElementById("marko-right-4");
-            // const markoWrong4 = document.getElementById("marko-wrong-4");
-            
-            // const markoIdle5 = document.getElementById("marko-idle-5");
-            // const markoRight5 = document.getElementById("marko-right-5");
-            // const markoWrong5 = document.getElementById("marko-wrong-5");
-
-            // const markoIdleVideo = document.getElementById("marko-idle-video");
-            // const markoRightVideo = document.getElementById("marko-right-video");
-            // const markoWrongVideo = document.getElementById("marko-wrong-video");
             
             // Audio
             const audioHi = document.getElementById("audio-hi");
@@ -869,27 +852,6 @@
                     audioHi.muted = false;
                 }
 
-                // if(vm.iscorrect == true){
-                //     markoIdle.setAttribute('visible', false);
-                //     markoRight.setAttribute('visible', false);
-                //     markoWrong.setAttribute('visible', true);
-                //     audioYes.play();
-                //     audioYes.muted = false;
-                // }
-                // else if(vm.iscorrect == false){
-                //     markoIdle.setAttribute('visible', false);
-                //     markoRight.setAttribute('visible', true);
-                //     markoWrong.setAttribute('visible', false);
-                //     audioNo.play();
-                //     audioNo.muted = false;
-                // }
-                // else{
-                //     markoIdle.setAttribute('visible', true);
-                //     markoRight.setAttribute('visible', false);
-                //     markoWrong.setAttribute('visible', false);
-                // }
-
-                
             });
 
             targetMarkonah2.addEventListener("targetFound", event =>{
@@ -914,28 +876,6 @@
                     audioHi.play();
                     audioHi.muted = false;
                 }
-
-                // if(vm.iscorrect == true){
-                //     markoIdle2.setAttribute('visible', false);
-                //     markoRight2.setAttribute('visible', false);
-                //     markoWrong2.setAttribute('visible', true);
-                //     audioYes.play();
-                //     audioYes.muted = false;
-                // }
-                // else if(vm.iscorrect == false){
-                //     markoIdle2.setAttribute('visible', false);
-                //     markoRight2.setAttribute('visible', true);
-                //     markoWrong2.setAttribute('visible', false);
-                //     audioNo.play();
-                //     audioNo.muted = false;
-                // }
-                // else{
-                //     markoIdle2.setAttribute('visible', true);
-                //     markoRight2.setAttribute('visible', false);
-                //     markoWrong2.setAttribute('visible', false);
-                // }
-
-                
             });
 
             targetMarkonah3.addEventListener("targetFound", event =>{
@@ -960,28 +900,7 @@
                     audioHi.play();
                     audioHi.muted = false;
                 }
-
-                // if(vm.iscorrect == true){
-                //     markoIdle3.setAttribute('visible', false);
-                //     markoRight3.setAttribute('visible', false);
-                //     markoWrong3.setAttribute('visible', true);
-                //     audioYes.play();
-                //     audioYes.muted = false;
-                // }
-                // else if(vm.iscorrect == false){
-                //     markoIdle3.setAttribute('visible', false);
-                //     markoRight3.setAttribute('visible', true);
-                //     markoWrong3.setAttribute('visible', false);
-                //     audioNo.play();
-                //     audioNo.muted = false;
-                // }
-                // else{
-                //     markoIdle3.setAttribute('visible', true);
-                //     markoRight3.setAttribute('visible', false);
-                //     markoWrong3.setAttribute('visible', false);
-                // }
-
-                
+            
             });
 
             targetMarkonah4.addEventListener("targetFound", event =>{
@@ -1007,27 +926,6 @@
                     audioHi.muted = false;
                 }
 
-                // if(vm.iscorrect == true){
-                //     markoIdle4.setAttribute('visible', false);
-                //     markoRight4.setAttribute('visible', false);
-                //     markoWrong4.setAttribute('visible', true);
-                //     audioYes.play();
-                //     audioYes.muted = false;
-                // }
-                // else if(vm.iscorrect == false){
-                //     markoIdle4.setAttribute('visible', false);
-                //     markoRight4.setAttribute('visible', true);
-                //     markoWrong4.setAttribute('visible', false);
-                //     audioNo.play();
-                //     audioNo.muted = false;
-                // }
-                // else{
-                //     markoIdle4.setAttribute('visible', true);
-                //     markoRight4.setAttribute('visible', false);
-                //     markoWrong4.setAttribute('visible', false);
-                // }
-
-                
             });
 
             targetMarkonah5.addEventListener("targetFound", event =>{
@@ -1053,27 +951,6 @@
                     audioHi.muted = false;
                 }
 
-                // if(vm.iscorrect == true){
-                //     markoIdle5.setAttribute('visible', false);
-                //     markoRight5.setAttribute('visible', false);
-                //     markoWrong5.setAttribute('visible', true);
-                //     audioYes.play();
-                //     audioYes.muted = false;
-                // }
-                // else if(vm.iscorrect == false){
-                //     markoIdle5.setAttribute('visible', false);
-                //     markoRight5.setAttribute('visible', true);
-                //     markoWrong5.setAttribute('visible', false);
-                //     audioNo.play();
-                //     audioNo.muted = false;
-                // }
-                // else{
-                //     markoIdle5.setAttribute('visible', true);
-                //     markoRight5.setAttribute('visible', false);
-                //     markoWrong5.setAttribute('visible', false);
-                // }
-
-                
             });
 
             targetMarkonah1.addEventListener("targetLost", event => {

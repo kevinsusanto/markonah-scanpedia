@@ -46,7 +46,7 @@
 .intro-text p{
     font-size: 16px;
     text-align: center;
-    padding: 0px 20px;
+    padding: 0px 50px;
     line-height: 24px;
     font-weight: 700;
     color: var(--secondary);
@@ -166,6 +166,7 @@
 .ar-intro-page .marko3{
     position: absolute;
     bottom : 0px;
+    left: -15%;
     /* bottom: 55px; */
 }
 
@@ -513,9 +514,9 @@
   .result-page .claim-rewards .marko3,
   .result-page .try-again .marko3{
     position: absolute;
-    bottom: 0px;
+    bottom: 30px;
     /* bottom: 85px; */
-    left: 0px;
+    left: -15%;
   }
 
   .result-page .claim-rewards-btn,
