@@ -25,7 +25,7 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ftp.primeverse.id
-          username: markonah@markonah.scanpedia.id
+          username: staging-ntmc@staging-ntmc.scanpedia.id
           password: mamangsekayu97
           port: 21
 
