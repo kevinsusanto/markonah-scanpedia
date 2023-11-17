@@ -170,6 +170,13 @@
     /* bottom: 55px; */
 }
 
+.ar-intro-page .loading-camera{
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 1.5rem;
+}
+
 
 .ar-experience{
     position: relative;
