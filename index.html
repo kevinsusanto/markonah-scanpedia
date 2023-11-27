@@ -12,27 +12,20 @@
     <script src="js/aframe-text-geometry-component.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script data-n-head="1" src="https://staging.api.scanpedia.id/marker/primeskills.analitycs.js" mode="client" async="" data-body="true" defer=""></script>
+  
+    <!-- Google Analytics for Production -->
     <!-- Google tag (gtag.js) -->
-    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-CJNZTCW67N"></script> -->
-
-    <!-- Script Google Analytics for the STAGING version -->
-    <!-- <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-CJNZTCW67N');
-    </script> -->
-
-    <!-- Script Google Analytics for the LIVE version -->
-    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-24GEVZB6XY"></script>
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-N708BP5PEV"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    gtag('config', 'G-24GEVZB6XY');
+    gtag('config', 'G-N708BP5PEV');
     </script> -->
+
+
+
 </head>
 <body>
     <div id="app" class="app" v-cloak>
@@ -465,7 +458,7 @@
                     this.arintropage = true;
                 }
 
-                axios.get("https://staging.api.scanpedia.id/api/v1/markers/active", {
+                axios.get("https://staging-ntmc-api.scanpedia.id/api/v1/markers/active", {
                     headers: {
                         "Authorization": `Bearer ${localStorage.getItem("tokenmarkonah")}`
                     }
@@ -490,7 +483,7 @@
                         username: this.userphonenumber
                     }
                     await axios
-                        .post("https://staging.api.scanpedia.id/api/v1/login", formData)
+                        .post("https://staging-ntmc-api.scanpedia.id/api/v1/login", formData)
                         .then((response) => {
                             console.log(response);
                             localStorage.setItem("tokenmarkonah", response.data.data.token);
@@ -526,7 +519,7 @@
                     this.markoclickme = true;
                     this.arstartquiz = false;
                     this.loading = true;
-                    axios.get("https://staging.api.scanpedia.id/api/v1/questions/task", {
+                    axios.get("https://staging-ntmc-api.scanpedia.id/api/v1/questions/task", {
                         headers: {
                             "Authorization": `Bearer ${localStorage.getItem("tokenmarkonah")}`
                         }
@@ -631,7 +624,7 @@
                         for(let i = 0; i < this.useranswers.length; i++ ){
                             this.questions[i].answer_user = this.useranswers[i].option_key;
                         }
-                        axios.post("https://staging.api.scanpedia.id/api/v1/questions/submit", {
+                        axios.post("https://staging-ntmc-api.scanpedia.id/api/v1/questions/submit", {
                             score : this.totalcoins,
                             questions: this.questions
                         }, {
@@ -688,7 +681,7 @@
                     }
                 },
                 submitRating(){
-                    axios.post("https://staging.api.scanpedia.id/api/v1/rating", {
+                    axios.post("https://staging-ntmc-api.scanpedia.id/api/v1/rating", {
                             rating: this.selectedRating
                         }, {
                             headers: {
@@ -713,7 +706,7 @@
                     this.resultpagesuccess = false;
                     this.couponpage = true;
 
-                    axios.get(`https://staging.api.scanpedia.id/api/v1/coupons/user/${localStorage.getItem("IDmarkonah")}/reward`, {
+                    axios.get(`https://staging-ntmc-api.scanpedia.id/api/v1/coupons/user/${localStorage.getItem("IDmarkonah")}/reward`, {
                         headers: {
                             "Authorization": `Bearer ${localStorage.getItem("tokenmarkonah")}`
                         }
