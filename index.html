@@ -41,16 +41,17 @@
         <div class="intro-page" id="intro-page" v-show="intropage">
             <div class="markonah-logo">
                 <!-- <img src="Asset/ntmc/NTMC-POLRI.png" alt="" width="210px"> -->
-                <div class="intro-page-title">NTMC POLRI</div>
+                <div class="intro-page-title">Virtual Edukasi</div>
+                <div class="intro-page-title">Disiplin Tertib Berlalu Lintas</div>
             </div>
             <div class="scanpedia-logo">
-                <img src="Asset/ntmc/LOGO-NTMC.png" alt="" width="244px">
+                <img src="Asset/ntmc/LOGO-NTMC-FINAL.png" alt="" width="244px">
             </div>
             <div class="scanpedia-logo">
                 <img src="Asset/ntmc/Powered By Scanpedia.png" alt="" width="180px">
             </div>
             <div class="intro-text">
-                <p>Rasakan pengalaman seru bersama <span>NTMC!</span> </p>
+                <p>Rasakan Pengalaman AR seru dari kami</p>
             </div>
             <button class="try-now-btn" @click="tryNowClick()">Play Now</button>
         </div>
@@ -93,7 +94,7 @@
 
             <div class="ar-guidance" v-show="!targetfound && !markoclickme">
                 <p>Point your camera to</p>
-                <p>NTMC AR Marker</p>
+                <p>AR Marker</p>
                 <img src="Asset/ntmc/point-ar-gif.gif" alt="marko GIF" width="104px">
             </div>
             <div id="guide" v-show="!targetfound">
@@ -118,7 +119,7 @@
             <div class="quiz-container" v-show="markoclickme && isLoadQuestion" >
                 <div class="question-number">{{ currentQuestion + 1 }} of {{questions.length == undefined ? 0 : questions.length}}</div>
                 <div class="question">{{ question == undefined ? "" : question }}</div>
-                <img src="Asset/ntmc/LOGO-NTMC.png" alt="Logo NTMC" width="78px">
+                <img src="Asset/ntmc/LOGO-NTMC-FINAL.png" alt="Logo NTMC" width="78px">
                 <div class="btn-grid">
                   <!-- <a class="box box1">Semarang kan ada gudeg</a>
                   <a class="box box1">Solo kan ada selat</a>
@@ -181,7 +182,7 @@
         <div class="result-page" id="result-page" v-show="resultpagesuccess">
             <img class="confeti" src="Asset/gif/confeti.gif" alt="">
             <div class="markonah-logo">
-                <img src="Asset/ntmc/LOGO-NTMC.png" alt="" width="60px">
+                <img src="Asset/ntmc/LOGO-NTMC-FINAL.png" alt="" width="60px">
             </div>
 
             <div class="quiz-congratulations">
@@ -226,7 +227,7 @@
         <div class="result-page" id="result-page" v-show="resultpagefailed">
             <!-- <img class="confeti" src="Asset/gif/confeti.gif" alt=""> -->
             <div class="markonah-logo">
-                <img src="Asset/ntmc/LOGO-NTMC.png" alt="" width="60px">
+                <img src="Asset/ntmc/LOGO-NTMC-FINAL.png" alt="" width="60px">
             </div>
 
             <div class="quiz-congratulations">
