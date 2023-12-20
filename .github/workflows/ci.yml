@@ -3,7 +3,7 @@ name: ci
 on:
   push:
     branches:
-      - ntmc-staging
+      - ntmc-production
 jobs:
   ci:
     runs-on: ${{ matrix.os }}
