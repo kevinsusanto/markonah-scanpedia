@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NTMC | Scanpedia</title>
-    <link rel="stylesheet" href="style.css?ver=9">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?ver=11">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.0/dist/mindar-image-aframe.prod.js"></script>
@@ -12,7 +15,7 @@
     <script src="js/aframe-text-geometry-component.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script data-n-head="1" src="https://staging.api.scanpedia.id/marker/primeskills.analitycs.js" mode="client" async="" data-body="true" defer=""></script>
-  
+    
     <!-- Google Analytics for Production -->
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-N708BP5PEV"></script>
@@ -37,17 +40,18 @@
         <!-- Intro Page -->
         <div class="intro-page" id="intro-page" v-show="intropage">
             <div class="markonah-logo">
-                <!-- <img src="Asset/intro/markonah_logo_goodres.png" alt="" width="265px"> -->
-                <h1>NTMC POLRI</h1>
+                <!-- <img src="Asset/ntmc/NTMC-POLRI.png" alt="" width="210px"> -->
+                <div class="intro-page-title">Virtual Edukasi</div>
+                <div class="intro-page-title">Disiplin Tertib Berlalu Lintas</div>
             </div>
             <div class="scanpedia-logo">
-                <img src="Asset/ntmc/LOGO-NTMC.png" alt="" width="244px">
+                <img src="Asset/ntmc/LOGO-NTMC-FINAL.png" alt="" width="244px">
             </div>
             <div class="scanpedia-logo">
                 <img src="Asset/ntmc/Powered By Scanpedia.png" alt="" width="180px">
             </div>
             <div class="intro-text">
-                <p>Rasakan pengalaman seru bersama <span>AR NTMC</span> </p>
+                <p>Rasakan Pengalaman AR seru dari kami</p>
             </div>
             <button class="try-now-btn" @click="tryNowClick()">Play Now</button>
         </div>
@@ -73,9 +77,9 @@
 
         <!-- AR Introduction  -->
         <div class="ar-intro-page" id="ar-intro-page" v-show="arintropage">
-            <img class="ar-bubble" src="Asset/ntmc/SelamatDatang2.png" alt="" width="280px">
+            <img class="ar-bubble" src="Asset/ntmc/bubble-intro.png" alt="" width="280px">
             <button v-show="rearcamerabtnvisible" class="rear-camera-btn" @click="activateRearCameraClick()">Activate Rear Camera</button>
-            <img class="marko3" src="Asset/ntmc/NTMC_mascot.png" alt="Marko 3" width="270px">
+            <img class="marko3" src="Asset/ntmc/mascot/police_idle2 1.png" alt="Marko 3" width="300px">
             <p v-show="!rearcamerabtnvisible" class="loading-camera">Menunggu Kamera ....</p>
         </div>
 
@@ -90,8 +94,8 @@
 
             <div class="ar-guidance" v-show="!targetfound && !markoclickme">
                 <p>Point your camera to</p>
-                <p>NTMC AR Marker</p>
-                <img src="Asset/gif/besar.gif" alt="marko GIF" width="104px">
+                <p>AR Marker</p>
+                <img src="Asset/ntmc/point-ar-gif.gif" alt="marko GIF" width="104px">
             </div>
             <div id="guide" v-show="!targetfound">
                 <div class="hole"></div>
@@ -106,7 +110,7 @@
             <!-- After target has been found -->
             <div class="ar-start-quiz" v-show="arstartquiz" @click="clickMeStartTheQuiz()">
                 <!-- <img class="marko3" src="Asset/arintro/marko3-goodres.png" alt="Marko 3" width="170px"> -->
-                <img class="marko3-clickme" alt="" src="Asset/arexperience/click-me-indo-goodres.png" width="287px">
+                <img class="marko3-clickme" alt="" src="Asset/ntmc/clickme.png" width="298px">
             </div>
 
             <!-- Loading Question -->
@@ -115,10 +119,10 @@
             <div class="quiz-container" v-show="markoclickme && isLoadQuestion" >
                 <div class="question-number">{{ currentQuestion + 1 }} of {{questions.length == undefined ? 0 : questions.length}}</div>
                 <div class="question">{{ question == undefined ? "" : question }}</div>
-                <img src="Asset/ntmc/LOGO-NTMC.png" alt="Markonah Ellipse" width="78px">
+                <img src="Asset/ntmc/LOGO-NTMC-FINAL.png" alt="Logo NTMC" width="78px">
                 <div class="btn-grid">
-                  <!-- <a class="box box1">Semarang</a>
-                  <a class="box box1">Solo</a>
+                  <!-- <a class="box box1">Semarang kan ada gudeg</a>
+                  <a class="box box1">Solo kan ada selat</a>
                   <a class="box box1">Salatiga</a>
                   <a class="box box1">Surabaya</a> -->
                   <a class="box box1" v-for="(answer, i) in answers" :key="answer.option_key" @click="checkAnswer(answer)" :class="answerClass(answer)">{{ answer.option }}</a>
@@ -143,7 +147,7 @@
 
             <!-- Video ASSETS -->
             <a-assets>
-                <a-asset-item id="ntmc-police" src="Asset/ntmc/glb/NTMC-AR.glb"></a-asset-item>
+                <a-asset-item id="ntmc-police" src="Asset/ntmc/glb/Stylized_Polantas_Man.glb"></a-asset-item>
             </a-assets>
             
 
@@ -178,21 +182,21 @@
         <div class="result-page" id="result-page" v-show="resultpagesuccess">
             <img class="confeti" src="Asset/gif/confeti.gif" alt="">
             <div class="markonah-logo">
-                <img src="Asset/ntmc/LOGO-NTMC.png" alt="" width="120px">
+                <img src="Asset/ntmc/LOGO-NTMC-FINAL.png" alt="" width="60px">
             </div>
 
             <div class="quiz-congratulations">
-                <p>Selamat Anda telah menyelesaikan tantangan!</p>
-                <h5>Your Score</h5>
+                <p>Terima kasih telah mengikuti kuis dari kami</p>
+                <h5>Skor Anda</h5>
                 <div class="result-score">
-                    <img src="Asset/quiz/bi_coin-goodres.png" alt="" width="24px">
+                    <!-- <img src="Asset/quiz/bi_coin-goodres.png" alt="" width="24px"> -->
                     <div class="score">{{ totalcoins }}</div>
                 </div>
             </div>
 
             <div class="claim-rewards">
-                <div class="claim-rewards-message">Good Job! Selamat, Anda berhasil menyelesaikan tantangan dengan baik. Terus jaga kerja baik Anda !</div>
-                <img class="marko3" src="Asset/ntmc/NTMC_mascot.png" alt="Marko 3" width="270px">
+                <!-- <div class="claim-rewards-message">Good Job! Selamat, Anda berhasil menyelesaikan tantangan dengan baik. Terus jaga kerja baik Anda !</div> -->
+                <img class="marko3" src="Asset/ntmc/mascot/police_yes3 1.png" alt="Marko 3" width="350px">
             </div>
 
             <!-- <button class="claim-rewards-btn" @click="claimRewardsClick()">Claim Rewards</button> -->
@@ -202,7 +206,7 @@
             <div class="result-rating" v-show="resultpagesuccess && !closeresultrating">
                 <a href="#" class="close-btn" @click="closeRatingButtonClick()"><img src="Asset/result/close-button.png" alt="Close Button" width="24px"></a>
                 <!-- <div class="result-rating-message">How would you rate your experience with our company?</div> -->
-                <div class="result-rating-message">Bagaimana pengalaman Anda bermain bersama NTMC?</div>
+                <div class="result-rating-message">Bagaimana pengalaman Anda bermain bersama kami?</div>
                 <div class="stars">
                     <!-- <i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star"></i>
@@ -215,7 +219,7 @@
                     class="fa-solid fa-star"></i>
                 </div>
                 <p class="star-message">{{ getMessage(selectedRating) }}</p>
-                <button class="submit-btn" :class="{disabled : !selectedRating}" @click="submitRating()">Submit</button>
+                <button class="submit-btn" :class="{disabled : !selectedRating}" @click="submitRating()"></button>
             </div>
         </div>
 
@@ -223,21 +227,21 @@
         <div class="result-page" id="result-page" v-show="resultpagefailed">
             <!-- <img class="confeti" src="Asset/gif/confeti.gif" alt=""> -->
             <div class="markonah-logo">
-                <img src="Asset/ntmc/LOGO-NTMC.png" alt="" width="120px">
+                <img src="Asset/ntmc/LOGO-NTMC-FINAL.png" alt="" width="60px">
             </div>
 
             <div class="quiz-congratulations">
-                <p>Selamat Anda telah menyelesaikan tantangan!</p>
-                <h5>Your Score</h5>
+                <p>Terima kasih telah mengikuti kuis dari kami</p>
+                <h5>Skor Anda</h5>
                 <div class="result-score">
-                    <img src="Asset/quiz/bi_coin-goodres.png" alt="" width="24px">
+                    <!-- <img src="Asset/quiz/bi_coin-goodres.png" alt="" width="24px"> -->
                     <div class="score">{{ totalcoins }}</div>
                 </div>
             </div>
 
             <div class="try-again">
-                <div class="try-again-message">Great Effort! Kesuksesan adalah hal yang perlu di perjuangkan. Coba lagi ya! Semangat!</div>
-                <img class="marko3" src="Asset/ntmc/NTMC_mascot.png" alt="Marko 3" width="270px">
+                <!-- <div class="try-again-message">Great Effort! Kesuksesan adalah hal yang perlu di perjuangkan. Coba lagi ya! Semangat!</div> -->
+                <img class="marko3" src="Asset/ntmc/mascot/police_yes3 1.png" alt="Marko 3" width="350px">
             </div>
 
             <button @click="windowsReload()" class="try-again-btn">Try Again</button>
@@ -246,7 +250,7 @@
             <div class="result-rating" v-show="resultpagefailed && !closeresultrating">
                 <a href="#" class="close-btn" @click="closeRatingButtonClick()"><img src="Asset/result/close-button.png" alt="Close Button" width="24px"></a>
                 <!-- <div class="result-rating-message">How would you rate your experience with our company?</div> -->
-                <div class="result-rating-message">Bagaimana pengalaman Anda bermain bersama NTMC?</div>
+                <div class="result-rating-message">Bagaimana pengalaman Anda bermain bersama kami?</div>
                 <div class="stars">
                     <!-- <i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star"></i>
@@ -259,7 +263,7 @@
                     class="fa-solid fa-star"></i>
                 </div>
                 <p class="star-message">{{ getMessage(selectedRating) }}</p>
-                <button class="submit-btn" :class="{disabled : !selectedRating}" @click="submitRating()">Submit</button>
+                <button class="submit-btn" :class="{disabled : !selectedRating}" @click="submitRating()"></button>
             </div>
         </div>
 
