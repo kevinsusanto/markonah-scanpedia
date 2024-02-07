@@ -97,13 +97,13 @@
                 <p>AR Marker</p>
                 <img src="Asset/ntmc/point-ar-gif.gif" alt="marko GIF" width="104px">
             </div>
-            <div id="guide" v-show="!targetfound">
+            <div id="guide" v-show="!targetfound && !markoclickme">
                 <div class="hole"></div>
                 <div>
                     <img src="Asset/arexperience/scanner-border-goodres.png" class="scanner-border">
                 </div>
             </div>
-            <div class="ar-overlay" v-show="!targetfound">
+            <div class="ar-overlay" v-show="!targetfound && !markoclickme">
                 <div class="overlay"></div>
             </div>
 
