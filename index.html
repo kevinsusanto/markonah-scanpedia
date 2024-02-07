@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?ver=11">
+    <link rel="stylesheet" href="style.css?ver=12">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.0/dist/mindar-image-aframe.prod.js"></script>
@@ -86,11 +86,11 @@
         <!-- AR Experience -->
         <div class="ar-experience" id="ar-experience" v-show="arexperience">
             <!-- Testing GIF -->
-            <!-- <div class="marko-gif">
-                <img src="Asset/gif/marko/idle.gif" alt="Markonah Idle" width="380px" v-show="isIdleMarko">
-                <img src="Asset/gif/marko/right.gif" alt="Markonah Right" width="380px" v-show="isRightMarko">
-                <img src="Asset/gif/marko/wrong.gif" alt="Markonah Wrong" width="380px" v-show="isWrongMarko">
-            </div> -->
+            <div class="marko-gif">
+                <img src="Asset/ntmc/png/char2_Polisi_Idle_Full.png" alt="Police Idle" width="300px" v-show="isIdleMarko">
+                <img src="Asset/ntmc/png/char3_Polisi_Yes_full.png" alt="Police Right" width="300px" v-show="isRightMarko">
+                <img src="Asset/ntmc/png/char4_Polisi_No_full.png" alt="Police Wrong" width="300px" v-show="isWrongMarko">
+            </div>
 
             <div class="ar-guidance" v-show="!targetfound && !markoclickme">
                 <p>Point your camera to</p>
@@ -320,6 +320,7 @@
                 arexperience: false,
                 arstartquiz: false,
                 targetfound: false,
+                targetlost: false,
                 markoclickme: false,
                 resultpagesuccess: false,
                 resultpagefailed: false,
@@ -533,9 +534,16 @@
                         this.questions = response.data.data;
                         this.isLoadQuestion = true;
                         this.loading = false;
-                        this.isIdleMarko = true;
-                        this.isRightMarko = false;
-                        this.isWrongMarko = false;
+                        // if (this.targetfound){
+                        //     this.isIdleMarko = false;
+                        //     this.isRightMarko = false;
+                        //     this.isWrongMarko = false;
+                        // }
+                        // else{
+                        //     this.isIdleMarko = true;
+                        //     this.isRightMarko = false;
+                        //     this.isWrongMarko = false;
+                        // }
                         console.log(this.questions.length);
                         if(this.questions.length < 10){
                             alert("Sistem sedang dalam perbaikan. Silakan kembali di lain waktu");
@@ -568,7 +576,24 @@
                         document.getElementById("audio-yes").play();
                         document.getElementById("audio-yes").muted = false;
 
-                        // JAWABAN BENAR RUBAH ANIMASI
+                        //JAWABAN BENAR RUBAH ANIMASI
+                        if(this.targetfound){
+                            this.isIdleMarko = false;
+                            this.isRightMarko = false;
+                            this.isWrongMarko = false;
+                        }
+                        else if (this.targetlost){
+                            this.isIdleMarko = false;
+                            this.isRightMarko = true;
+                            this.isWrongMarko = false;
+                        }
+                        else{
+                            this.isIdleMarko = false;
+                            this.isRightMarko = true;
+                            this.isWrongMarko = false;
+                        }
+
+                        
                         
                         document.getElementById("ntmc-1").setAttribute("animation-mixer","clip: Right*");
                         document.getElementById("ntmc-2").setAttribute("animation-mixer","clip: Right*");
@@ -587,6 +612,24 @@
                         document.getElementById("audio-no").muted = false;
 
                         // JAWABAN SALAH RUBAH ANIMASI
+
+                        if(this.targetfound){
+                            this.isIdleMarko = false;
+                            this.isRightMarko = false;
+                            this.isWrongMarko = false;
+                        }
+                        else if (this.targetlost){
+                            this.isIdleMarko = false;
+                            this.isRightMarko = false;
+                            this.isWrongMarko = true;
+                        }
+                        else{
+                            this.isIdleMarko = false;
+                            this.isRightMarko = false;
+                            this.isWrongMarko = true;
+                        }
+
+                        
                     
                         document.getElementById("ntmc-1").setAttribute("animation-mixer","clip: Wrong*");
                         document.getElementById("ntmc-2").setAttribute("animation-mixer","clip: Wrong*");
@@ -618,6 +661,17 @@
                     this.iscorrect = null;
 
                     // QUIZ sedang IDLE RUBAH ANIMASI
+                    if(this.targetfound){
+                        this.isIdleMarko = false;
+                        this.isRightMarko = false;
+                        this.isWrongMarko = false;
+                        }
+                    else{
+                        this.isIdleMarko = true;
+                        this.isRightMarko = false;
+                        this.isWrongMarko = false;
+                    }
+
                     document.getElementById("ntmc-1").setAttribute("animation-mixer","clip: NlaTrack*");
                     document.getElementById("ntmc-2").setAttribute("animation-mixer","clip: NlaTrack*");
                     document.getElementById("ntmc-3").setAttribute("animation-mixer","clip: NlaTrack*");
@@ -836,8 +890,9 @@
                 // markoRightVideo.play();
                 // markoWrongVideo.play();
                 vm.targetfound = true;
+                vm.targetlost = false;
 
-                vm.isIdleMarko = true;
+                vm.isIdleMarko = false;
                 vm.isRightMarko = false;
                 vm.isWrongMarko = false;
                 if(vm.markoclickme){
@@ -861,8 +916,9 @@
                 // markoRightVideo.play();
                 // markoWrongVideo.play();
                 vm.targetfound = true;
+                vm.targetlost = false;
 
-                vm.isIdleMarko = true;
+                vm.isIdleMarko = false;
                 vm.isRightMarko = false;
                 vm.isWrongMarko = false;
                 if(vm.markoclickme){
@@ -885,8 +941,9 @@
                 // markoRightVideo.play();
                 // markoWrongVideo.play();
                 vm.targetfound = true;
+                vm.targetlost = false;
 
-                vm.isIdleMarko = true;
+                vm.isIdleMarko = false;
                 vm.isRightMarko = false;
                 vm.isWrongMarko = false;
                 if(vm.markoclickme){
@@ -910,8 +967,9 @@
                 // markoRightVideo.play();
                 // markoWrongVideo.play();
                 vm.targetfound = true;
+                vm.targetlost = false;
 
-                vm.isIdleMarko = true;
+                vm.isIdleMarko = false;
                 vm.isRightMarko = false;
                 vm.isWrongMarko = false;
                 if(vm.markoclickme){
@@ -935,8 +993,9 @@
                 // markoRightVideo.play();
                 // markoWrongVideo.play();
                 vm.targetfound = true;
+                vm.targetlost = false;
 
-                vm.isIdleMarko = true;
+                vm.isIdleMarko = false;
                 vm.isRightMarko = false;
                 vm.isWrongMarko = false;
                 if(vm.markoclickme){
@@ -954,12 +1013,27 @@
             targetMarkonah1.addEventListener("targetLost", event => {
                 vm.arstartquiz = false;
                 vm.targetfound = false;
+                vm.targetlost = true;
 
-                if(vm.markoclickme){
+                if(vm.markoclickme && !vm.isanswered){
+                    console.log("Marko is clicked")
                     vm.isIdleMarko = true;
                     vm.isRightMarko = false;
                     vm.isWrongMarko = false;
-                } else {
+                }
+                else if(vm.isanswered && vm.iscorrect){
+                    console.log("Answer is correct")
+                    vm.isIdleMarko = false;
+                    vm.isRightMarko = true;
+                    vm.isWrongMarko = false;
+                }
+                else if(vm.isanswered && !vm.iscorrect){
+                    console.log("Answer is incorrect")
+                    vm.isIdleMarko = false;
+                    vm.isRightMarko = false;
+                    vm.isWrongMarko = true;
+                }
+                else {
                     vm.isIdleMarko = false;
                     vm.isRightMarko = false;
                     vm.isWrongMarko = false;
@@ -968,11 +1042,27 @@
             targetMarkonah2.addEventListener("targetLost", event => {
                 vm.arstartquiz = false;
                 vm.targetfound = false;
-                if(vm.markoclickme){
+                vm.targetlost = true;
+
+                if(vm.markoclickme && !vm.isanswered){
+                    console.log("Marko is clicked")
                     vm.isIdleMarko = true;
                     vm.isRightMarko = false;
                     vm.isWrongMarko = false;
-                } else {
+                }
+                else if(vm.isanswered && vm.iscorrect){
+                    console.log("Answer is correct")
+                    vm.isIdleMarko = false;
+                    vm.isRightMarko = true;
+                    vm.isWrongMarko = false;
+                }
+                else if(vm.isanswered && !vm.iscorrect){
+                    console.log("Answer is incorrect")
+                    vm.isIdleMarko = false;
+                    vm.isRightMarko = false;
+                    vm.isWrongMarko = true;
+                }
+                else {
                     vm.isIdleMarko = false;
                     vm.isRightMarko = false;
                     vm.isWrongMarko = false;
@@ -982,11 +1072,26 @@
             targetMarkonah3.addEventListener("targetLost", event => {
                 vm.arstartquiz = false;
                 vm.targetfound = false;
-                if(vm.markoclickme){
+                vm.targetlost = true;
+                if(vm.markoclickme && !vm.isanswered){
+                    console.log("Marko is clicked")
                     vm.isIdleMarko = true;
                     vm.isRightMarko = false;
                     vm.isWrongMarko = false;
-                } else {
+                }
+                else if(vm.isanswered && vm.iscorrect){
+                    console.log("Answer is correct")
+                    vm.isIdleMarko = false;
+                    vm.isRightMarko = true;
+                    vm.isWrongMarko = false;
+                }
+                else if(vm.isanswered && !vm.iscorrect){
+                    console.log("Answer is incorrect")
+                    vm.isIdleMarko = false;
+                    vm.isRightMarko = false;
+                    vm.isWrongMarko = true;
+                }
+                else {
                     vm.isIdleMarko = false;
                     vm.isRightMarko = false;
                     vm.isWrongMarko = false;
@@ -996,11 +1101,26 @@
             targetMarkonah4.addEventListener("targetLost", event => {
                 vm.arstartquiz = false;
                 vm.targetfound = false;
-                if(vm.markoclickme){
+                vm.targetlost = true;
+                if(vm.markoclickme && !vm.isanswered){
+                    console.log("Marko is clicked")
                     vm.isIdleMarko = true;
                     vm.isRightMarko = false;
                     vm.isWrongMarko = false;
-                } else {
+                }
+                else if(vm.isanswered && vm.iscorrect){
+                    console.log("Answer is correct")
+                    vm.isIdleMarko = false;
+                    vm.isRightMarko = true;
+                    vm.isWrongMarko = false;
+                }
+                else if(vm.isanswered && !vm.iscorrect){
+                    console.log("Answer is incorrect")
+                    vm.isIdleMarko = false;
+                    vm.isRightMarko = false;
+                    vm.isWrongMarko = true;
+                }
+                else {
                     vm.isIdleMarko = false;
                     vm.isRightMarko = false;
                     vm.isWrongMarko = false;
@@ -1010,11 +1130,26 @@
             targetMarkonah5.addEventListener("targetLost", event => {
                 vm.arstartquiz = false;
                 vm.targetfound = false;
-                if(vm.markoclickme){
+                vm.targetlost = true;
+                if(vm.markoclickme && !vm.isanswered){
+                    console.log("Marko is clicked")
                     vm.isIdleMarko = true;
                     vm.isRightMarko = false;
                     vm.isWrongMarko = false;
-                } else {
+                }
+                else if(vm.isanswered && vm.iscorrect){
+                    console.log("Answer is correct")
+                    vm.isIdleMarko = false;
+                    vm.isRightMarko = true;
+                    vm.isWrongMarko = false;
+                }
+                else if(vm.isanswered && !vm.iscorrect){
+                    console.log("Answer is incorrect")
+                    vm.isIdleMarko = false;
+                    vm.isRightMarko = false;
+                    vm.isWrongMarko = true;
+                }
+                else {
                     vm.isIdleMarko = false;
                     vm.isRightMarko = false;
                     vm.isWrongMarko = false;
