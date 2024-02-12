@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?ver=12">
+    <link rel="stylesheet" href="style.css?ver=13">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.0/dist/mindar-image-aframe.prod.js"></script>
@@ -40,9 +40,9 @@
         <!-- Intro Page -->
         <div class="intro-page" id="intro-page" v-show="intropage">
             <div class="markonah-logo">
-                <!-- <img src="Asset/ntmc/NTMC-POLRI.png" alt="" width="210px"> -->
-                <div class="intro-page-title">Virtual Edukasi</div>
-                <div class="intro-page-title">Disiplin Tertib Berlalu Lintas</div>
+                <img src="Asset/ntmc/VE/ntmc-title.png" alt="" width="308px">
+                <!-- <div class="intro-page-title">Virtual Edukasi</div>
+                <div class="intro-page-title">Disiplin Tertib Berlalu Lintas</div> -->
             </div>
             <div class="scanpedia-logo">
                 <img src="Asset/ntmc/LOGO-NTMC-FINAL.png" alt="" width="244px">
@@ -53,7 +53,7 @@
             <div class="intro-text">
                 <p>Rasakan Pengalaman AR seru dari kami</p>
             </div>
-            <button class="try-now-btn" @click="tryNowClick()">Play Now</button>
+            <button class="try-now-btn" @click="tryNowClick()">Mulai</button>
         </div>
 
         <!-- Registration Page -->
@@ -61,13 +61,13 @@
             <div class="registration-form">
                 <div class="form">
                     <form v-on:submit.prevent="submitSignUp">
-                        <label for="regist-phone">Phone</label>
-                        <input v-model="userphonenumber" type="tel" id="regist-phone" name="regist-phone" placeholder="Example : 0853xxxxxxxx" required><br>
-                        <label for="first-name">First Name</label>
-                        <input v-model="userfirstname" type="text" id="first-name" name="first-name" placeholder="Example : Lionel" required><br>
-                        <label for="last-name">Last Name</label>
-                        <input v-model="userlastname" type="text" id="last-name" name="last-name" placeholder="Example : Messi" required>
-                        <button type="submit" class="sign-up-btn">Sign Up</button>
+                        <label for="regist-phone">Nomor Ponsel</label>
+                        <input v-model="userphonenumber" type="tel" id="regist-phone" name="regist-phone" placeholder="Contoh : 0853xxxxxxxx" required><br>
+                        <label for="first-name">Nama Depan</label>
+                        <input v-model="userfirstname" type="text" id="first-name" name="first-name" placeholder="Contoh : Lionel" required><br>
+                        <label for="last-name">Nama Belakang</label>
+                        <input v-model="userlastname" type="text" id="last-name" name="last-name" placeholder="Contoh : Messi" required>
+                        <button type="submit" class="sign-up-btn">Daftar</button>
                     </form>
                 </div>
             </div>
@@ -77,8 +77,19 @@
 
         <!-- AR Introduction  -->
         <div class="ar-intro-page" id="ar-intro-page" v-show="arintropage">
-            <img class="ar-bubble" src="Asset/ntmc/bubble-intro.png" alt="" width="280px">
-            <button v-show="rearcamerabtnvisible" class="rear-camera-btn" @click="activateRearCameraClick()">Activate Rear Camera</button>
+            <div class="ar-title">
+                <img src="Asset/ntmc/VE/ar_title.png" alt="" width="316px">
+                <!-- <div class="ar-title-text">
+                    <p>Kuis Interaktif</p>
+                    <h3>Virtual Edukasi</h3>
+                    <h3>Disiplin Tertib Lalu Lintas</h3>
+                </div>
+                <div class="ar-title-image">
+                    <img src="Asset/ntmc/VE/ntmc-logo-circle.png" alt="" width="46px"> -->
+
+            </div>
+            <img class="ar-bubble" src="Asset/ntmc/VE/ar_bubble.png" alt="" width="230px">
+            <button v-show="rearcamerabtnvisible" class="rear-camera-btn" @click="activateRearCameraClick()">Izinkan Buka Kamera</button>
             <img class="marko3" src="Asset/ntmc/mascot/police_idle2 1.png" alt="Marko 3" width="300px">
             <p v-show="!rearcamerabtnvisible" class="loading-camera">Menunggu Kamera ....</p>
         </div>
@@ -117,9 +128,9 @@
             <div class="loading" v-if="loading">Memuat....</div>
             <!-- Quiz Time !!! -->
             <div class="quiz-container" v-show="markoclickme && isLoadQuestion" >
-                <div class="question-number">{{ currentQuestion + 1 }} of {{questions.length == undefined ? 0 : questions.length}}</div>
+                <div class="question-number">{{ currentQuestion + 1 }} dari {{questions.length == undefined ? 0 : questions.length}}</div>
                 <div class="question">{{ question == undefined ? "" : question }}</div>
-                <img src="Asset/ntmc/LOGO-NTMC-FINAL.png" alt="Logo NTMC" width="78px">
+                <!-- <img src="Asset/ntmc/LOGO-NTMC-FINAL.png" alt="Logo NTMC" width="78px"> -->
                 <div class="btn-grid">
                   <!-- <a class="box box1">Semarang kan ada gudeg</a>
                   <a class="box box1">Solo kan ada selat</a>
@@ -129,13 +140,20 @@
                 </div>
                 <h1 :class="{benardialog: iscorrect, salahdialog: !iscorrect}" v-show="isanswered">{{ correctorincorrect }}</h1>
                 <button @click="nextQuestion()" :class="{questionnext: isanswered, questionnextdisabled: !isanswered}">Next</button>
+            </div>
+            
+            <!-- Quiz is finished -->
+            <button @click="goToResultPage()" v-if="isquizfinished" class="quiz-finished"></button>
+            <div class="overlays" v-if="isquizfinished"></div>
 
+            <!-- Score -->
+            <div class="quiz-score-logo" v-show="markoclickme && isLoadQuestion">
+                <img src="Asset/ntmc/VE/ntmc-logo-circle-goodres.png" alt="" width="70px">
             </div>
 
 
-            <!-- Score -->
             <div class="quiz-score" v-show="markoclickme && isLoadQuestion">
-                <img src="Asset/quiz/bi_coin-goodres.png" alt="" width="24px">
+                <img src="Asset/ntmc/VE/coin.png" alt="" width="24px">
                 <p>{{ totalcoins }}</p>
             </div>
 
@@ -182,13 +200,13 @@
         <div class="result-page" id="result-page" v-show="resultpagesuccess">
             <img class="confeti" src="Asset/gif/confeti.gif" alt="">
             <div class="markonah-logo">
-                <img src="Asset/ntmc/LOGO-NTMC-FINAL.png" alt="" width="60px">
+                <img src="Asset/ntmc/VE/ntmc-logo-circle-goodres.png" alt="" width="74px">
             </div>
 
             <div class="quiz-congratulations">
-                <p>Terima kasih telah mengikuti kuis dari kami</p>
-                <h5>Skor Anda</h5>
+                <p>Terima kasih Telah Mengikuti Kuis</p>
                 <div class="result-score">
+                    <h5>Skor Anda</h5>
                     <!-- <img src="Asset/quiz/bi_coin-goodres.png" alt="" width="24px"> -->
                     <div class="score">{{ totalcoins }}</div>
                 </div>
@@ -200,7 +218,7 @@
             </div>
 
             <!-- <button class="claim-rewards-btn" @click="claimRewardsClick()">Claim Rewards</button> -->
-            <button class="claim-rewards-btn" @click="backToHomeClick()">Try Again</button>
+            <button class="claim-rewards-btn" @click="backToHomeClick()">Ulangi</button>
 
             <!-- Star Rating -->
             <div class="result-rating" v-show="resultpagesuccess && !closeresultrating">
@@ -227,13 +245,14 @@
         <div class="result-page" id="result-page" v-show="resultpagefailed">
             <!-- <img class="confeti" src="Asset/gif/confeti.gif" alt=""> -->
             <div class="markonah-logo">
-                <img src="Asset/ntmc/LOGO-NTMC-FINAL.png" alt="" width="60px">
+                <img src="Asset/ntmc/VE/ntmc-logo-circle-goodres.png" alt="" width="74px">
             </div>
 
             <div class="quiz-congratulations">
-                <p>Terima kasih telah mengikuti kuis dari kami</p>
-                <h5>Skor Anda</h5>
+                <p>Terima kasih Telah Mengikuti Kuis</p>
+                
                 <div class="result-score">
+                    <h5>Skor Anda</h5>
                     <!-- <img src="Asset/quiz/bi_coin-goodres.png" alt="" width="24px"> -->
                     <div class="score">{{ totalcoins }}</div>
                 </div>
@@ -244,7 +263,7 @@
                 <img class="marko3" src="Asset/ntmc/mascot/police_yes3 1.png" alt="Marko 3" width="350px">
             </div>
 
-            <button @click="windowsReload()" class="try-again-btn">Try Again</button>
+            <button @click="windowsReload()" class="try-again-btn">Ulangi</button>
 
             <!-- Star Rating -->
             <div class="result-rating" v-show="resultpagefailed && !closeresultrating">
@@ -415,6 +434,7 @@
                 iscorrect: null,
                 totalcoins: 0,
                 isclaimreward: null,
+                isquizfinished: false,
 
                 // Coupon Data
                 couponusername : "",
@@ -692,17 +712,18 @@
                         })
                         .then((response) =>{
                             console.log(response);
+
                             this.isclaimreward = response.data.data.claim_reward;
-                            if(this.isclaimreward){
-                                this.resultpagesuccess = true;
-                                this.markoclickme = false;
-                                this.arexperience = false;
-                            }
-                            else{
-                                this.resultpagefailed = true;
-                                this.markoclickme = false;
-                                this.arexperience = false;
-                            }
+                            // if(this.isclaimreward){
+                            //     this.resultpagesuccess = true;
+                            //     this.markoclickme = false;
+                            //     this.arexperience = false;
+                            // }
+                            // else{
+                            //     this.resultpagefailed = true;
+                            //     this.markoclickme = false;
+                            //     this.arexperience = false;
+                            // }
                         })
                         .catch((error)=>{
                             console.log(error);
@@ -713,8 +734,24 @@
                             this.errorcode = error.response.data.code;
                             this.errormessage = error.response.data.message;
                         })
-                        alert("Quiz is finished");
+                        // alert("Quiz is finished");
+                        this.isquizfinished = true;
                         this.currentQuestion = 0;
+                    }
+                },
+
+                goToResultPage: function() {
+                    if(this.isclaimreward){
+                        this.resultpagesuccess = true;
+                        this.markoclickme = false;
+                        this.arexperience = false;
+                        this.isquizfinished = false;
+                    }
+                    else{
+                        this.resultpagefailed = true;
+                        this.markoclickme = false;
+                        this.arexperience = false;
+                        this.isquizfinished = false;
                     }
                 },
 
@@ -725,15 +762,15 @@
                 getMessage(rating){
                     switch(rating){
                         case 1:
-                            return 'Very Dissatisified';
+                            return 'Sangat Tidak Puas';
                         case 2:
-                            return 'Dissatisfied';
+                            return 'Tidak Puas';
                         case 3:
-                            return 'Neutral';
+                            return 'Cukup Puas';
                         case 4:
-                            return 'Satisfied';
+                            return 'Puas';
                         case 5:
-                            return 'Very Satisfied';
+                            return 'Sangat Puas';
                         default:
                             return '';
                     }
