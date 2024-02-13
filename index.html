@@ -65,8 +65,8 @@
                         <input v-model="userphonenumber" type="tel" id="regist-phone" name="regist-phone" placeholder="Contoh : 0853xxxxxxxx" required><br>
                         <label for="first-name">Nama Depan</label>
                         <input v-model="userfirstname" type="text" id="first-name" name="first-name" placeholder="Contoh : Lionel" required><br>
-                        <label for="last-name">Nama Belakang</label>
-                        <input v-model="userlastname" type="text" id="last-name" name="last-name" placeholder="Contoh : Messi" required>
+                        <label for="last-name">Nama Belakang (Opsional)</label>
+                        <input v-model="userlastname" type="text" id="last-name" name="last-name" placeholder="Contoh : Messi">
                         <button type="submit" class="sign-up-btn">Daftar</button>
                     </form>
                 </div>
@@ -263,7 +263,7 @@
                 <img class="marko3" src="Asset/ntmc/mascot/police_yes3 1.png" alt="Marko 3" width="350px">
             </div>
 
-            <button @click="windowsReload()" class="try-again-btn">Ulangi</button>
+            <button @click="backToHomeClick()" class="try-again-btn">Ulangi</button>
 
             <!-- Star Rating -->
             <div class="result-rating" v-show="resultpagefailed && !closeresultrating">
